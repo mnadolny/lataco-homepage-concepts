@@ -95,16 +95,6 @@ h1, h2, h3, p { margin: 0; }
 .hero__sign .by { margin-top: 12px; }
 .hero__sign a:hover .hed { text-decoration: underline; text-decoration-thickness: 5px; text-underline-offset: .1em; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .hero__sign { animation: hang 900ms cubic-bezier(.3, .7, .4, 1) 150ms both; }
-  @keyframes hang {
-    0%   { transform: translateY(-24px) rotate(-2deg); opacity: 0; }
-    18%  { opacity: 1; }
-    55%  { transform: translateY(5px) rotate(.7deg); }
-    78%  { transform: translateY(-2px) rotate(-.25deg); }
-    100% { transform: none; opacity: 1; }
-  }
-}
 
 /* ---------- 3. Latest: the menu board, now headed by Taco Madness ---------- */
 .latest { padding: 20px 0 60px; }
