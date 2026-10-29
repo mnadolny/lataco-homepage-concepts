@@ -1,6 +1,7 @@
 // Floating concept switcher for client review. Include with <script src="shared/switcher.js" defer></script>
 (() => {
   if (window.self !== window.top) return; // not inside the index page's previews
+  if (location.hostname.endsWith(".github.io")) return; // hidden on the shared client links
   const concepts = [
     ['index.html', 'All three'],
     ['a.html', 'A  Primera Plana'],
