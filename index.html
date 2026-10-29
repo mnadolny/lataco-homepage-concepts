@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L.A. TACO Homepage Directions</title>
+<link rel="stylesheet" href="shared/fonts.css">
+<style>
+  :root {
+    --navy: #16386c; --deep: #0c2549; --paper: #f7f4e9; --gold: #f4c542; --chile: #c2412d; --ink: #142a46;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--deep); color: var(--paper); font-family: var(--sans); }
+  a { color: inherit; }
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 0 60px; }
+
+  header.intro { padding: 56px 0 72px; display: grid; grid-template-columns: 5fr 7fr; gap: 24px 64px; align-items: end; }
+  header.intro .logo { width: 300px; --logo-fill: var(--gold); --logo-line: #000; grid-column: 1 / -1; margin-bottom: 40px; }
+  header.intro h1 { font: 900 76px/0.98 var(--sutro); margin: 0; letter-spacing: -0.01em; }
+  header.intro p { font: 400 21px/1.55 var(--serif); margin: 0; max-width: 60ch; color: #dfe3ea; }
+  header.intro p + p { margin-top: 14px; font: 500 14px/1.5 var(--sans); color: #aab4c4; }
+
+  .concepts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding-bottom: 96px; }
+  .concept { display: flex; flex-direction: column; text-decoration: none; min-width: 0; }
+  .preview {
+    position: relative; aspect-ratio: 1440 / 2100; overflow: hidden; background: #000;
+    outline: 1px solid rgba(255,255,255,.14); transition: outline-color .2s;
+  }
+  .preview iframe {
+    position: absolute; top: 0; left: 0; width: 1440px; height: 2100px; border: 0;
+    transform-origin: 0 0; pointer-events: none;
+  }
+  .concept:hover .preview, .concept:focus-visible .preview { outline: 3px solid var(--gold); }
+  .concept:focus-visible { outline: none; }
+  .meta { padding-top: 26px; }
+  .meta .letter { font: 700 italic 18px/1 var(--sutro); color: var(--gold); }
+  .meta h2 { margin: 8px 0 12px; font-size: clamp(28px, 2.9vw, 42px); --c-fill: var(--gold); --c-primary: #000; }
+  .meta .line { font: 700 24px/1.2 var(--sutro); margin: 0 0 10px; }
+  .meta p { font: 400 17px/1.55 var(--serif); color: #dfe3ea; margin: 0 0 18px; max-width: 46ch; }
+  .chips { display: flex; gap: 6px; margin-bottom: 20px; }
+  .chips span { width: 28px; height: 28px; border-radius: 50%; outline: 1px solid rgba(255,255,255,.25); }
+  .open { font: 600 15px/1 var(--sans); text-decoration: underline; text-underline-offset: 4px; }
+
+  footer { border-top: 1px solid rgba(255,255,255,.14); padding: 28px 0 90px; font: 400 13px/1.6 var(--sans); color: #aab4c4; }
+
+  @media (max-width: 1100px) {
+    header.intro { grid-template-columns: 1fr; }
+    .concepts { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
+  }
+  @media (max-width: 600px) {
+    .wrap { padding: 0 16px; }
+    header.intro h1 { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="intro">
+    <span class="logo" role="img" aria-label="L.A. TACO"></span>
+    <h1>Three ways forward for the homepage.</h1>
+    <div>
+      <p>Each direction keeps the Tuscan wood-type logo and the new Sutro headline face, and uses the same real stories. They differ in how far they push colour, photography, and the way type sits on images.</p>
+      <p>Desktop at 1440 wide. Sutro shows correctly only on machines with the font activated. Use the switcher at bottom right to move between concepts.</p>
+    </div>
+  </header>
+
+  <section class="concepts" aria-label="Concepts">
+    <a class="concept" href="a.html">
+      <div class="preview"><iframe src="a.html" title="Concept A preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+      <div class="meta">
+        <span class="letter">Concept A</span>
+        <h2><span class="chroma chroma--shaded" data-text="PRIMERA PLANA"><span>PRIMERA PLANA</span></span></h2>
+        <p class="line">The client's system, turned up.</p>
+        <p>Same navy, paper and gold. Photos run edge to edge, headlines sit on paper slabs laid over them, and the section names become live, layered Sutro instead of image files.</p>
+        <div class="chips" aria-hidden="true"><span style="background:#16386c"></span><span style="background:#f7f4e9"></span><span style="background:#f4c542"></span><span style="background:#c2412d"></span></div>
+        <span class="open">Open Primera Plana</span>
+      </div>
+    </a>
+    <a class="concept" href="b.html">
+      <div class="preview"><iframe src="b.html" title="Concept B preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+      <div class="meta">
+        <span class="letter">Concept B</span>
+        <h2><span class="chroma chroma--shaded" data-text="RÓTULO"><span>RÓTULO</span></span></h2>
+        <p class="line">A street of painted signs.</p>
+        <p>Every section is a storefront: a hand-painted fascia in taquería red, mustard, nopal green or Dodger blue over a big framed photo. The latest news reads like a menu board.</p>
+        <div class="chips" aria-hidden="true"><span style="background:#d7261e"></span><span style="background:#ffc20e"></span><span style="background:#1e7b4a"></span><span style="background:#005a9c"></span><span style="background:#fff4dc"></span></div>
+        <span class="open">Open Rótulo</span>
+      </div>
+    </a>
+    <a class="concept" href="c.html">
+      <div class="preview"><iframe src="c.html" title="Concept C preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+      <div class="meta">
+        <span class="letter">Concept C</span>
+        <h2><span class="chroma chroma--shaded" data-text="WHEATPASTE"><span>WHEATPASTE</span></span></h2>
+        <p class="line">The wall outside the show.</p>
+        <p>Zines, punk flyers and day-glo Colby posters are where L.A. TACO comes from. Stories are posters pasted at different sizes, type is stacked to fill the width, and membership is sold on tear-off tabs.</p>
+        <div class="chips" aria-hidden="true"><span style="background:#c9c5bc"></span><span style="background:linear-gradient(135deg,#ffe600,#ff7a00,#ff2e93)"></span><span style="background:#0078bf"></span><span style="background:#ff48b0"></span><span style="background:#1b1714"></span></div>
+        <span class="open">Open Wheatpaste</span>
+      </div>
+    </a>
+  </section>
+</main>
+<footer class="wrap">L.A. TACO redesign. Homepage exploration, October 2026. Content from lataco.com.</footer>
+<script>
+  // Scale the live 1440px previews to their card width.
+  const fit = () => document.querySelectorAll('.preview').forEach(p => {
+    p.querySelector('iframe').style.transform = `scale(${p.clientWidth / 1440})`;
+  });
+  addEventListener('resize', fit); fit();
+</script>
+<script src="shared/switcher.js" defer></script>
+</body>
+</html>

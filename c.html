@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L.A. TACO — Wheatpaste</title>
+<link rel="stylesheet" href="shared/fonts.css">
+<style>
+:root {
+  --wall: #C9C5BC;
+  --ink: #1B1714;
+  --stock: #F4F1E8;
+  --yellow: #FFE600;
+  --orange: #FF7A00;
+  --hot: #FF2E93;
+  --blue: #0078BF;
+  --pink: #FF48B0;
+  --blue-ink: #005E97;            /* riso blue, one press darker, for small text on stock (AA) */
+  --colby: linear-gradient(180deg, #FFE600 0%, #FF7A00 50%, #FF2E93 100%);
+
+  --W: min(1320px, calc(100vw - 120px));
+  --step: calc((var(--W) + 24px) / 12);   /* one column + one gutter */
+
+  --paste: drop-shadow(0 1px 0 rgba(27,23,20,.20)) drop-shadow(0 5px 9px rgba(27,23,20,.16));
+  --lift: drop-shadow(0 2px 1px rgba(27,23,20,.22)) drop-shadow(0 10px 16px rgba(27,23,20,.20));
+
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1 0 0 0 0 .09 0 0 0 0 .08 1.5 0 0 0 -.6'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/></svg>");
+  --mottle: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='4' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35 0 0 0 0 .33 0 0 0 0 .3 0 0 0 -1.2 .75'/></filter><rect width='100%25' height='100%25' filter='url(%23m)' opacity='.22'/></svg>");
+
+  --torn-top: polygon(0% 6.3px, 3.7% 10.5px, 4.7% 8.8px, 5.8% 3.5px, 6.0% 11.8px, 6.3% 1.4px, 7.0% 5.0px, 7.2% 9.1px, 9.1% 1.8px, 11.8% 5.9px, 12.4% 0.5px, 14.4% 8.0px, 15.1% 9.2px, 18.1% 6.9px, 20.6% 10.5px, 22.3% 3.8px, 24.4% 8.3px, 29.0% 7.1px, 30.0% 7.0px, 30.8% 5.5px, 31.4% 10.1px, 32.4% 11.3px, 36.6% 5.7px, 37.2% 8.0px, 39.7% 0.7px, 42.5% 8.4px, 42.8% 7.8px, 43.4% 11.9px, 45.3% 9.9px, 50.7% 3.4px, 53.6% 4.6px, 54.8% 8.0px, 57.4% 0.3px, 57.7% 5.5px, 58.2% 2.0px, 58.6% 1.4px, 62.7% 0.7px, 63.9% 9.2px, 65.1% 1.6px, 68.0% 3.0px, 69.9% 4.7px, 79.4% 10.5px, 81.6% 1.0px, 82.7% 5.4px, 85.8% 6.6px, 94.8% 10.6px, 97.6% 9.8px, 100% 10.4px, 100% 100%, 0 100%);
+  --torn-bottom: polygon(0 0, 100% 0, 100% calc(100% - 5.4px), 95.8% calc(100% - 11.5px), 95.3% calc(100% - 8.3px), 90.0% calc(100% - 3.1px), 88.4% calc(100% - 3.4px), 87.5% calc(100% - 0.3px), 79.8% calc(100% - 4.3px), 78.0% calc(100% - 6.2px), 69.0% calc(100% - 2.7px), 67.6% calc(100% - 8.9px), 63.4% calc(100% - 9.8px), 61.4% calc(100% - 10.2px), 58.9% calc(100% - 11.8px), 56.6% calc(100% - 9.7px), 51.5% calc(100% - 2.7px), 48.5% calc(100% - 4.0px), 41.9% calc(100% - 9.3px), 41.5% calc(100% - 6.4px), 39.9% calc(100% - 9.3px), 39.2% calc(100% - 2.0px), 36.9% calc(100% - 4.4px), 35.9% calc(100% - 8.4px), 34.0% calc(100% - 11.7px), 27.8% calc(100% - 6.3px), 26.3% calc(100% - 0.3px), 25.2% calc(100% - 6.5px), 23.3% calc(100% - 1.8px), 20.9% calc(100% - 11.4px), 17.6% calc(100% - 0.3px), 15.1% calc(100% - 9.9px), 14.9% calc(100% - 3.2px), 10.4% calc(100% - 4.1px), 6.7% calc(100% - 1.0px), 5.3% calc(100% - 11.9px), 2.6% calc(100% - 10.2px), 0.4% calc(100% - 1.5px), 0% calc(100% - 4.4px));
+  --torn-sides: polygon(5.0px 0%, 2.9px 19.7%, 3.9px 20.4%, 4.8px 22.0%, 0.5px 22.7%, 4.0px 36.5%, 5.5px 62.4%, 4.7px 90.0%, 2.9px 95.5%, 1.1px 98.8%, 4.7px 100%, calc(100% - 3.9px) 100%, calc(100% - 5.8px) 97.2%, calc(100% - 0.1px) 94.7%, calc(100% - 0.8px) 80.1%, calc(100% - 3.3px) 72.5%, calc(100% - 2.1px) 40.1%, calc(100% - 3.9px) 39.6%, calc(100% - 5.9px) 33.3%, calc(100% - 5.0px) 17.0%, calc(100% - 0.9px) 15.1%, calc(100% - 4.8px) 12.7%, calc(100% - 5.4px) 0%);
+  --torn-topbot: polygon(0% 7.0px, 1.9% 5.1px, 10.6% 6.8px, 13.1% 8.2px, 17.2% 4.0px, 18.3% 5.5px, 21.1% 4.5px, 24.8% 6.2px, 25.2% 4.1px, 27.7% 4.3px, 29.3% 8.5px, 32.6% 6.3px, 35.4% 7.9px, 41.9% 8.5px, 42.1% 2.3px, 44.0% 8.5px, 45.8% 7.6px, 47.3% 1.2px, 50.2% 1.1px, 52.4% 0.7px, 55.5% 6.0px, 56.0% 8.1px, 58.3% 1.4px, 58.6% 6.4px, 72.5% 5.9px, 78.4% 1.3px, 79.9% 7.9px, 82.6% 8.7px, 87.2% 2.0px, 90.4% 8.6px, 91.0% 3.6px, 93.4% 8.9px, 100% 7.5px, 100% calc(100% - 7.5px), 97.2% calc(100% - 8.8px), 93.8% calc(100% - 6.2px), 91.1% calc(100% - 3.5px), 81.9% calc(100% - 7.5px), 78.8% calc(100% - 3.9px), 77.9% calc(100% - 7.4px), 72.2% calc(100% - 1.0px), 70.0% calc(100% - 8.4px), 63.4% calc(100% - 1.7px), 57.1% calc(100% - 6.6px), 55.4% calc(100% - 0.1px), 51.2% calc(100% - 0.2px), 44.0% calc(100% - 3.1px), 42.5% calc(100% - 4.5px), 33.9% calc(100% - 6.8px), 31.9% calc(100% - 2.8px), 27.0% calc(100% - 1.8px), 25.9% calc(100% - 1.5px), 19.6% calc(100% - 1.0px), 14.9% calc(100% - 4.7px), 13.0% calc(100% - 1.2px), 8.9% calc(100% - 8.3px), 6.4% calc(100% - 3.1px), 4.0% calc(100% - 7.8px), 1.9% calc(100% - 0.6px), 0% calc(100% - 0.8px));
+}
+
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background-color: var(--wall);
+  background-image: var(--grain), var(--mottle);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.wrap { width: var(--W); margin-inline: auto; }
+.grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
+
+/* ---------- paper primitives ---------- */
+.paste { position: relative; filter: var(--paste); transform: rotate(var(--r, 0deg)); }
+.paper { position: relative; background: var(--stock); }
+.paper.grainy::after, .grainy::after { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: .45; mix-blend-mode: multiply; pointer-events: none; }
+.tape {
+  position: absolute; width: 112px; height: 30px; z-index: 3;
+  background: rgba(246, 240, 214, .62);
+  box-shadow: 0 1px 1px rgba(27,23,20,.10);
+  clip-path: polygon(0 8%, 6% 0, 12% 10%, 18% 2%, 24% 9%, 32% 1%, 40% 8%, 48% 0, 56% 9%, 64% 2%, 72% 10%, 80% 1%, 88% 8%, 94% 0, 100% 6%, 100% 94%, 94% 100%, 88% 91%, 80% 99%, 72% 90%, 64% 98%, 56% 91%, 48% 100%, 40% 92%, 32% 99%, 24% 91%, 18% 98%, 12% 90%, 6% 100%, 0 92%);
+}
+
+/* fitted stacked display lines (Colby style) */
+.stack { margin: 0; font-family: var(--sutro); font-weight: 900; text-transform: uppercase; line-height: .9; letter-spacing: 0; }
+.fl { display: block; white-space: nowrap; font-size: 60px; }
+.fl > span { display: inline-block; }
+.fl + .fl { margin-top: .02em; }
+.stack .chroma { line-height: .9; }
+
+.kick { font: 600 15px/1.2 var(--sans-cond); color: var(--blue-ink); }
+.by { font: 500 14px/1.3 var(--sans); }
+.by b { font-weight: 600; }
+.hl a:hover, a.hl:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 4px; }
+
+/* ---------- header ---------- */
+.masthead { position: relative; z-index: 20; padding-top: 26px; }
+.masthead .wrap { display: grid; grid-template-columns: 240px 1fr 180px; align-items: center; gap: 24px; min-height: 196px; }
+.diecut {
+  display: block; width: 200px; transform: rotate(-4deg); margin-left: 12px;
+  filter:
+    drop-shadow(4px 0 0 #fff) drop-shadow(-4px 0 0 #fff) drop-shadow(4px 0 0 #fff) drop-shadow(-4px 0 0 #fff)
+    drop-shadow(0 4px 0 #fff) drop-shadow(0 -4px 0 #fff) drop-shadow(0 4px 0 #fff) drop-shadow(0 -4px 0 #fff)
+    drop-shadow(3px 3px 0 #fff) drop-shadow(-3px -3px 0 #fff)
+    drop-shadow(1.5px 0 0 var(--ink)) drop-shadow(-1.5px 0 0 var(--ink)) drop-shadow(0 1.5px 0 var(--ink)) drop-shadow(0 -1.5px 0 var(--ink))
+    drop-shadow(1px 3px 3px rgba(27,23,20,.3));
+}
+.diecut span { display: block; aspect-ratio: 1200 / 799; background: var(--ink);
+  -webkit-mask: url(img/logo-stacked.png) center / contain no-repeat; mask: url(img/logo-stacked.png) center / contain no-repeat; }
+.navrow { display: flex; flex-direction: column; gap: 14px; }
+.nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 34px; margin: 0; padding: 0; }
+.nav a { font: 600 15px/1.2 var(--sans); padding: 6px 0; border-bottom: 2px solid transparent; }
+.nav a:hover { border-bottom-color: var(--ink); }
+.nav li.login { margin-left: auto; }
+.edition { font: 500 13px/1.3 var(--sans); }
+.edition b { font-weight: 600; }
+.join-sticker {
+  justify-self: end; width: 150px; height: 150px; border-radius: 50%;
+  background: var(--pink); color: var(--ink);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  transform: rotate(8deg); filter: var(--lift);
+  box-shadow: inset 0 0 0 5px var(--pink), inset 0 0 0 7px rgba(27,23,20,.85);
+}
+.join-sticker .j1 { font: 900 22px/0.95 var(--sutro); text-transform: uppercase; }
+.join-sticker .j2 { font: 900 30px/0.95 var(--sutro); text-transform: uppercase; }
+.join-sticker .j3 { font: 600 13px/1.15 var(--sans-cond); margin-top: 6px; max-width: 100px; }
+.join-sticker:hover { transform: rotate(4deg) scale(1.03); }
+
+/* ---------- hero wall ---------- */
+.hero { position: relative; padding: 8px 0 72px; }
+.hero .grid12 { align-items: start; }
+.hero .grid12 > * { grid-row: 1; }
+
+.p-lead { grid-column: 1 / 9; --r: -1.2deg; margin-top: 30px; z-index: 2; }
+.p-lead .paper { clip-path: var(--torn-top); background: var(--hot); }
+.p-lead .photo { height: 480px; position: relative; }
+.p-lead .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 40%; }
+.p-lead .field { padding: 26px 32px 30px; background: var(--colby); }
+.p-lead .stack { color: var(--ink); }
+.p-lead .stack a { display: block; }
+.p-lead .shade { --c-fill: var(--stock); --c-primary: var(--ink); }
+.p-lead .strip { margin-top: 22px; background: var(--stock); padding: 12px 18px 14px; transform: rotate(-.4deg); display: flex; flex-direction: column; gap: 4px; }
+.p-lead .strip .by { flex: none; }
+.p-lead .strip p { margin: 0; font: 400 18px/1.4 var(--serif); }
+.p-lead .kicker-tab { position: absolute; left: 32px; bottom: -1px; background: var(--ink); color: var(--stock); font: 600 15px/1 var(--sans-cond); padding: 9px 12px 8px; }
+
+.p-cactus { grid-column: 9 / 13; --r: 2deg; margin-left: -72px; margin-right: -24px; margin-top: 10px; z-index: 3; }
+.p-cactus .paper { clip-path: var(--torn-bottom); padding-bottom: 6px; }
+.p-cactus .photo { height: 214px; }
+.p-cactus .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 0% 0%; }
+.p-cactus .txt { padding: 16px 22px 20px; }
+.p-cactus h2 { margin: 6px 0 12px; font: 900 36px/1.0 var(--sutro); letter-spacing: -.005em; max-width: 92%; }
+
+.p-comic { grid-column: 9 / 12; --r: -3deg; margin-left: 64px; margin-top: 540px; z-index: 2; filter: var(--lift); }
+.p-comic .paper { padding: 12px 12px 14px; background: #fff; }
+.p-comic img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.p-comic figcaption { font: 500 14px/1.35 var(--sans); padding-top: 10px; }
+.p-comic figcaption a { font-weight: 600; }
+.p-comic .tape.l { top: -12px; left: -36px; transform: rotate(-32deg); }
+.p-comic .tape.r { top: -12px; right: -36px; transform: rotate(28deg); }
+
+.stk-free {
+  grid-column: 1 / 3; justify-self: start; margin-left: -58px; margin-top: -6px; z-index: 5;
+  --r: -10deg; width: 178px; height: 178px; border-radius: 50%;
+  background: var(--pink); filter: var(--lift);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  box-shadow: inset 0 0 0 6px var(--pink), inset 0 0 0 8px var(--ink);
+}
+.stk-free .s1 { font: 700 14px/1 var(--sans-cond); margin-bottom: 4px; }
+.stk-free .chroma { font-size: 40px; line-height: .86; --c-fill: var(--yellow); --c-primary: var(--ink); text-transform: uppercase; }
+.stk-burst {
+  grid-column: 12 / 13; justify-self: end; margin-right: 40px; margin-top: 410px; z-index: 6;
+  --r: 12deg; width: 168px; height: 168px; background: var(--yellow); filter: var(--lift);
+  clip-path: polygon(50% 0%, 56.5% 13.5%, 67% 3.4%, 69.3% 18.1%, 82.1% 10.4%, 79.6% 25.2%, 94.3% 22.1%, 86.6% 35%, 100% 37%, 89.8% 46.4%, 100% 57%, 86.5% 62.4%, 95% 75.3%, 80.3% 75.9%, 82.1% 90.6%, 69.2% 83.6%, 64.2% 97.5%, 55.6% 86.1%, 46% 99.4%, 41.3% 85.3%, 28.8% 93.3%, 30.8% 78.6%, 16% 81.6%, 22.3% 68.2%, 7.5% 64.6%, 18.5% 54.5%, 6.4% 45.5%, 20.1% 39.5%, 11.8% 26.9%, 26.6% 27.2%, 25.4% 12.4%, 38.3% 19.7%, 42.6% 5.6%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+}
+.stk-burst b { font: 900 64px/.8 var(--sutro); display: block; }
+.stk-burst span { font: 700 14px/1.05 var(--sans-cond); display: block; max-width: 84px; margin-top: 4px; }
+
+/* the one motion moment: posters + stickers slap onto the wall */
+@media (prefers-reduced-motion: no-preference) {
+  .slap { animation: slap 350ms cubic-bezier(.2, .9, .3, 1.12) both; animation-delay: calc(120ms + var(--i, 0) * 90ms); }
+  @keyframes slap {
+    from { opacity: 0; transform: rotate(calc(var(--r, 0deg) * 1.6 + var(--kick, 1.6deg))) scale(1.04); }
+    to   { opacity: 1; transform: rotate(var(--r, 0deg)) scale(1); }
+  }
+}
+
+/* ---------- section labels ---------- */
+.label-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 30px; }
+.label { display: inline-block; background: var(--ink); color: var(--stock); font: 900 44px/1 var(--sutro); padding: 12px 22px 8px; transform: rotate(-1.4deg); clip-path: var(--torn-sides); margin: 0; }
+.label-row .more { font: 600 15px/1.2 var(--sans); border-bottom: 2px solid var(--ink); padding-bottom: 2px; }
+.label-row .more:hover { background: var(--ink); color: var(--stock); }
+
+/* ---------- latest ---------- */
+.latest { padding: 40px 0 96px; }
+.latest .grid12 { align-items: start; }
+.strips { grid-column: 1 / 8; display: flex; flex-direction: column; }
+.strip-item { --r: .6deg; }
+.strip-item:nth-child(even) { --r: -.5deg; margin-left: 14px; margin-right: -10px; }
+.strip-item:nth-child(3) { --r: .8deg; }
+.strip-item + .strip-item { margin-top: -8px; }
+.strip-item .paper { clip-path: var(--torn-sides); display: grid; grid-template-columns: 1fr 150px; gap: 24px; padding: 20px 26px 24px 30px; align-items: center; }
+.strip-item h3 { margin: 6px 0 8px; font: 700 28px/1.06 var(--sutro); letter-spacing: -.005em; }
+.strip-item img { width: 150px; height: 104px; object-fit: cover; }
+
+.p-ice { grid-column: 8 / 13; --r: 1.1deg; margin-left: 12px; margin-top: 18px; }
+.p-ice .paper { background: var(--ink); clip-path: var(--torn-top); }
+.duo { position: relative; isolation: isolate; background: var(--pink); overflow: hidden; height: 430px; }
+.duo img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; filter: grayscale(1) contrast(1.25) brightness(1.08); mix-blend-mode: multiply; }
+.duo::after { content: ""; position: absolute; inset: 0; background: var(--blue); mix-blend-mode: lighten; pointer-events: none; }
+.p-ice .txt { padding: 28px 32px 34px; color: var(--stock); }
+.p-ice .kick { color: var(--pink); font-size: 16px; }
+.p-ice h2 { margin: 8px 0 14px; font: 900 46px/.98 var(--sutro); letter-spacing: -.005em; }
+.p-ice p { margin: 0 0 16px; font: 400 18px/1.45 var(--serif); max-width: 34em; }
+.p-ice .by { color: var(--stock); }
+.p-ice .tape { top: -14px; left: 50%; margin-left: -56px; transform: rotate(-3deg); }
+
+/* ---------- food ---------- */
+.food { padding: 40px 0 70px; }
+.food .grid12 { align-items: start; }
+.food-lead { grid-column: 1 / 9; position: relative; padding-bottom: 190px; }
+.food-lead .pic { --r: .6deg; }
+.food-lead .pic .paper { padding: 12px; }
+.food-lead .pic img { width: 100%; height: 720px; object-fit: cover; object-position: 50% 55%; }
+.food-strip { position: absolute; left: 48px; right: 40px; top: 640px; --r: -1.3deg; z-index: 2; }
+.food-strip .paper { background: var(--pink); padding: 26px 34px 28px; clip-path: var(--torn-sides); }
+.food-strip .kick { color: var(--ink); }
+.food-strip h2 { margin: 6px 0 14px; font: 900 52px/1.0 var(--sutro); letter-spacing: -.01em; }
+.food-strip p { margin: 0 0 12px; font: 400 19px/1.45 var(--serif); max-width: 40em; }
+
+.food-side { grid-column: 9 / 13; display: flex; flex-direction: column; }
+.food-side .mini { --r: -1.4deg; }
+.food-side .mini:nth-child(2) { --r: 1.3deg; margin-left: -44px; margin-right: 18px; margin-top: -14px; z-index: 2; }
+.food-side .mini:nth-child(3) { --r: -.7deg; margin-left: 10px; margin-top: -14px; }
+.mini .paper { padding: 10px 10px 0; clip-path: var(--torn-bottom); }
+.mini img { width: 100%; height: 160px; object-fit: cover; }
+.mini .txt { padding: 14px 10px 26px; }
+.mini h3 { margin: 6px 0 10px; font: 900 25px/1.04 var(--sutro); }
+
+/* ---------- guides: day-glo price cards ---------- */
+.guides { padding: 30px 0 130px; }
+.cards { align-items: start; row-gap: 40px; }
+.card { grid-column: span 3; --r: -1.6deg; filter: var(--lift); }
+.card:nth-child(2) { --r: 1.1deg; margin-top: 28px; }
+.card:nth-child(3) { --r: -.7deg; margin-top: 6px; }
+.card:nth-child(4) { --r: 1.8deg; margin-top: 34px; }
+.card .body { position: relative; padding: 22px 26px 30px; min-height: 610px; display: flex; flex-direction: column; }
+.card.c-y .body { background: var(--yellow); }
+.card.c-o .body { background: var(--orange); }
+.card.c-p .body { background: var(--pink); }
+.card.c-b .body { background: var(--blue); color: var(--stock); }
+.card.c-b .by { color: #fff; }
+.card .count { font: 900 220px/.78 var(--sutro); letter-spacing: -.03em; margin: 14px 0 18px -6px; }
+.card .stack a { display: block; }
+.card .by { margin-top: 14px; }
+.card .swatch { margin-top: auto; position: relative; transform: rotate(var(--sr, 2deg)); align-self: center; width: 88%; padding-top: 28px; }
+.card .swatch img { width: 100%; height: 150px; object-fit: cover; border: 6px solid #fff; box-shadow: 0 2px 4px rgba(27,23,20,.2); }
+.card .swatch .tape { top: 14px; left: 50%; margin-left: -50px; width: 100px; transform: rotate(-4deg); }
+.card:nth-child(2) .swatch { --sr: -2.5deg; }
+.card:nth-child(4) .swatch { --sr: -1.5deg; }
+.card:hover { --r: 0deg; }
+
+/* ---------- photo essay ---------- */
+.essay { padding: 20px 0 190px; }
+.essay-frame { position: relative; width: min(calc(100vw - 80px), 1640px); margin-inline: auto; --r: -.4deg; }
+.essay-frame .paper { padding: 14px; }
+.essay-frame img { width: 100%; aspect-ratio: 1360 / 760; object-fit: cover; object-position: 50% 30%; }
+.essay-frame .tape.tl { top: -10px; left: -30px; transform: rotate(-38deg); }
+.essay-frame .tape.tr { top: -10px; right: -30px; transform: rotate(36deg); }
+.essay-frame .tape.bl { bottom: -10px; left: -30px; transform: rotate(36deg); }
+.essay-frame .tape.br { bottom: -10px; right: -30px; transform: rotate(-34deg); }
+.essay-cap { position: absolute; left: calc((100% - var(--W)) / 2); bottom: -130px; width: calc(var(--step) * 6 - 24px); --r: -1.2deg; z-index: 4; }
+.essay-cap .paper { padding: 26px 32px 28px; clip-path: var(--torn-topbot); }
+.essay-cap h2 { margin: 8px 0 14px; font: 900 44px/1.0 var(--sutro); letter-spacing: -.01em; }
+
+/* ---------- members ---------- */
+.members { padding: 30px 0 120px; }
+.p-members { grid-column: 4 / 11; grid-row: 1; --r: -.8deg; filter: var(--lift); z-index: 2; }
+/* house posters pasted either side of the members poster */
+.p-mag { grid-column: 1 / 4; grid-row: 1; align-self: start; margin: 96px -36px 0 0; --r: 2.2deg; z-index: 1; }
+.p-zine { grid-column: 11 / 13; grid-row: 1; align-self: end; margin: 0 0 150px -28px; --r: -3deg; z-index: 3; }
+.p-mag .paper, .p-zine .paper { padding: 12px 12px 16px; }
+.p-mag img, .p-zine img { width: 100%; }
+.p-mag .cap, .p-zine .cap { display: block; margin-top: 12px; }
+.p-mag .cap b, .p-zine .cap b { display: block; font: 900 22px/1.05 var(--sutro); margin-bottom: 6px; }
+.p-mag .tape { top: -14px; left: 50%; margin-left: -56px; transform: rotate(-4deg); }
+.p-zine .tape { top: -12px; left: 18px; transform: rotate(6deg); width: 84px; }
+.p-members .sheet { background: var(--colby); clip-path: var(--torn-top); padding: 52px 48px 34px; position: relative; }
+.p-members .stack { color: var(--ink); }
+.p-members .deluxe { --c-fill: var(--stock); --c-primary: var(--ink); --c-inline: var(--hot); }
+.p-members .pitch { margin-top: 26px; background: var(--stock); padding: 18px 22px 20px; transform: rotate(.5deg); }
+.p-members .pitch p { margin: 0; font: 400 19px/1.5 var(--serif); }
+.tabs { display: flex; align-items: flex-start; background: transparent; }
+.tab { position: relative; background: var(--stock); height: 260px; border-left: 2px dashed rgba(27,23,20,.55); transform-origin: top center; }
+.tabs .tab:first-child { border-left: 0; }
+.tab.wide { flex: 0 0 25%; padding: 22px 22px 20px; display: flex; flex-direction: column; }
+.tab.wide .t1 { font: 900 50px/.9 var(--sutro); text-transform: uppercase; }
+.tab.wide .t2 { font: 700 24px/1.1 var(--sutro); margin-top: 8px; }
+.tab.wide .t3 { font: 400 15px/1.4 var(--serif); margin-top: 10px; }
+.tab.wide .t4 { margin-top: auto; font: 600 15px/1 var(--sans); align-self: flex-start; background: var(--ink); color: var(--stock); padding: 10px 14px; }
+.tab.wide:hover .t4 { background: var(--blue); }
+.tab.wide:nth-child(2) { transform: rotate(.5deg); }
+.tab.narrow { flex: 1 1 0; display: flex; justify-content: center; padding: 22px 0; }
+.tab.narrow span { writing-mode: vertical-rl; font: 600 16px/1.1 var(--sans-cond); }
+.tab.narrow:nth-child(4) { transform: rotate(-1.4deg); }
+.tab.narrow:nth-child(6) { transform: rotate(1deg); }
+.tab.gone { background: transparent; border-left-color: transparent; }
+.tab.gone::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 34px; background: var(--stock); clip-path: polygon(0 0, 100% 0, 100% 50%, 82% 70%, 74% 40%, 60% 85%, 44% 55%, 30% 100%, 18% 60%, 6% 78%, 0 45%); }
+.tabs .perf { position: absolute; left: 0; right: 0; top: 0; border-top: 2px dashed rgba(27,23,20,.4); }
+
+/* ---------- footer ---------- */
+.foot { position: relative; background: var(--ink); color: var(--stock); margin-top: 60px; padding: 46px 0 40px; }
+.foot::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -77px; height: 78px; background: var(--ink);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='56' viewBox='0 0 80 56'><path fill-rule='evenodd' d='M0 56V20A10 10 0 0 1 20 20A10 10 0 0 1 40 20A10 10 0 0 1 60 20A10 10 0 0 1 80 20V56Z M7 20a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z M27 20a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z M47 20a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z M67 20a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z M20 30L25 37L20 44L15 37Z M60 30L65 37L60 44L55 37Z M36 38a4 4 0 1 0 8 0a4 4 0 1 0 -8 0Z M38 47h4v4h-4Z M-2 47h4v4h-4Z M78 47h4v4h-4Z'/></svg>") 0 0 / 112px 78px repeat-x;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='56' viewBox='0 0 80 56'><path fill-rule='evenodd' d='M0 56V20A10 10 0 0 1 20 20A10 10 0 0 1 40 20A10 10 0 0 1 60 20A10 10 0 0 1 80 20V56Z M7 20a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z M27 20a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z M47 20a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z M67 20a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z M20 30L25 37L20 44L15 37Z M60 30L65 37L60 44L55 37Z M36 38a4 4 0 1 0 8 0a4 4 0 1 0 -8 0Z M38 47h4v4h-4Z M-2 47h4v4h-4Z M78 47h4v4h-4Z'/></svg>") 0 0 / 112px 78px repeat-x;
+}
+.foot .grid12 { row-gap: 32px; }
+.foot .brand { grid-column: 1 / 5; }
+.foot .logo-solid { display: block; width: 250px; aspect-ratio: 1200 / 447; background: var(--stock);
+  -webkit-mask: url(img/logo-solid.png) center / contain no-repeat; mask: url(img/logo-solid.png) center / contain no-repeat; }
+.foot .tag { font: 400 20px/1.4 var(--serif); margin: 16px 0 0; max-width: 18em; }
+.foot nav { grid-column: 5 / 8; }
+.foot nav ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 24px; }
+.foot nav li { break-inside: avoid; }
+.foot nav a { display: inline-block; font: 600 15px/1.2 var(--sans); padding: 7px 0; }
+.foot nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.foot .mag { grid-column: 8 / 13; }
+.foot h2 { font: 900 26px/1.05 var(--sutro); margin: 0 0 8px; }
+.foot .mag p { font: 400 16px/1.5 var(--serif); margin: 0 0 12px; max-width: 34em; }
+.foot .mag a.u { font: 600 15px/1.2 var(--sans); border-bottom: 2px solid var(--pink); }
+.foot form { display: flex; gap: 8px; margin-top: 10px; max-width: 460px; }
+.foot input { flex: 1; min-width: 0; font: 400 15px/1 var(--sans); padding: 12px 14px; border: 2px solid var(--stock); background: transparent; color: var(--stock); }
+.foot input::placeholder { color: rgba(244,241,232,.75); }
+.foot button { font: 600 15px/1 var(--sans); padding: 12px 18px; border: 0; background: var(--pink); color: var(--ink); cursor: pointer; }
+.foot .divider { grid-column: 1 / 13; border-top: 1px solid rgba(244,241,232,.25); padding-top: 18px; display: flex; justify-content: space-between; font: 500 13px/1.3 var(--sans); }
+
+/* ---------- stacked fallback ---------- */
+@media (max-width: 900px) {
+  :root { --W: calc(100vw - 32px); }
+  .masthead .wrap { grid-template-columns: 1fr auto; min-height: 0; }
+  .diecut { width: 150px; }
+  .navrow { grid-column: 1 / -1; grid-row: 2; }
+  .nav li.login { margin-left: 0; }
+  .join-sticker { width: 118px; height: 118px; }
+  .join-sticker .j2 { font-size: 22px; }
+  .grid12, .hero .grid12 { display: flex; flex-direction: column; gap: 28px; }
+  .hero .grid12 > *, .p-lead, .p-cactus, .p-comic, .p-ice, .strips, .food-lead, .food-side, .p-members { margin: 0 !important; width: 100%; }
+  .p-comic { width: 80% !important; align-self: center; }
+  .p-mag, .p-zine { width: 70% !important; margin: 0 !important; align-self: center; }
+  .stk-free, .stk-burst { display: none; }
+  .p-lead .photo { height: 280px; }
+  .p-lead .strip { flex-direction: column; gap: 6px; }
+  .strip-item .paper { grid-template-columns: 1fr 96px; }
+  .strip-item img { width: 96px; height: 80px; }
+  .strip-item:nth-child(even) { margin: -8px 0 0 !important; }
+  .food-lead { padding-bottom: 0; }
+  .food-lead .pic img { height: 300px; }
+  .food-strip { position: relative; left: auto; right: auto; top: auto; margin: -40px 12px 0; }
+  .food-strip h2 { font-size: 34px; }
+  .food-side .mini { margin: 0 0 20px !important; }
+  .card { width: 100%; margin: 0 !important; }
+  .card .body { min-height: 0; }
+  .essay-cap { position: relative; left: auto; bottom: auto; width: auto; margin: -40px 16px 0; }
+  .essay { padding-bottom: 80px; }
+  .tabs { flex-wrap: wrap; }
+  .tab.wide { flex-basis: 50%; }
+  .tab.narrow { flex-basis: 25%; height: 200px; }
+  .foot .brand, .foot nav, .foot .mag { grid-column: auto; }
+  .p-members .sheet { padding: 36px 20px 24px; }
+  .p-lead .field { padding: 20px 18px 22px; }
+  .p-ice h2, .essay-cap h2 { font-size: 34px; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="diecut" href="#" aria-label="L.A. TACO home"><span></span></a>
+    <div class="navrow">
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="#">News</a></li>
+          <li><a href="#">Food &amp; Tacos</a></li>
+          <li><a href="#">Explore L.A.</a></li>
+          <li><a href="#">Shop</a></li>
+          <li class="login"><a href="#">Member log in</a></li>
+        </ul>
+      </nav>
+      <p class="edition" style="margin:0"><b>Saturday, October 10, 2026.</b> Independent, reader-funded, and pasted up fresh this morning.</p>
+    </div>
+    <a class="join-sticker" href="#">
+      <span class="j1">Join</span>
+      <span class="j2">L.A. TACO</span>
+      <span class="j3">from $4.92 a month</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO WALL -->
+  <section class="hero" aria-label="Top stories">
+    <div class="wrap grid12">
+
+      <article class="p-lead paste slap" style="--i:0">
+        <div class="paper">
+          <div class="photo">
+            <img src="img/lead.jpg" alt="A taquero shaves al pastor from a trompo at a street stand at night">
+            <span class="kicker-tab">Food / Opinion</span>
+          </div>
+          <div class="field">
+            <h1 class="stack">
+              <a href="#">
+                <span class="fl"><span>Brick-and-mortar</span></span>
+                <span class="fl"><span>restaurants need</span></span>
+                <span class="fl shade"><span class="chroma chroma--shaded" data-text="TO STOP BLAMING"><span>to stop blaming</span></span></span>
+                <span class="fl"><span>street vendors</span></span>
+              </a>
+            </h1>
+            <div class="strip">
+              <span class="by">By <b>Jake Hook</b></span>
+              <p>The city has room for both. What&rsquo;s missing is real support for the people who feed it.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="p-cactus paste slap" style="--i:1; --kick:-1.4deg">
+        <div class="paper">
+          <div class="photo"><img src="img/181136.jpg" alt="The neon sign of Cactus Taquería #1 in Hollywood at night"></div>
+          <div class="txt">
+            <span class="kick">Tacos</span>
+            <h2 class="hl"><a href="#">After 34 years, Cactus Taquería #1 is being forced to close</a></h2>
+            <span class="by">By <b>Jake Hook</b></span>
+          </div>
+        </div>
+      </article>
+
+      <figure class="p-comic paste slap" style="--i:2; margin-bottom:0; margin-right:0">
+        <span class="tape l" aria-hidden="true"></span>
+        <span class="tape r" aria-hidden="true"></span>
+        <div class="paper">
+          <a href="#"><img src="img/183639.jpg" alt="Sunday Taquitos comic: two ICE agents flank a man in a Latinos for Trump shirt"></a>
+          <figcaption><a href="#">Sunday Taquitos #33</a>, by Ivan Ehlers</figcaption>
+        </div>
+      </figure>
+
+      <a class="stk-free paste slap" href="#" style="--i:3; --kick:-6deg">
+        <span class="s1">Members eat</span>
+        <span class="chroma chroma--shaded" data-text="FREE"><span>Free</span></span>
+        <span class="chroma chroma--shaded" data-text="TACOS"><span>Tacos</span></span>
+      </a>
+
+      <a class="stk-burst paste slap" href="#" style="--i:4; --kick:8deg">
+        <b>19</b>
+        <span>best asada tacos</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- LATEST -->
+  <section class="latest" aria-labelledby="latest-h">
+    <div class="wrap">
+      <div class="label-row">
+        <h2 class="label" id="latest-h">Latest</h2>
+        <a class="more" href="#">All the news</a>
+      </div>
+      <div class="grid12">
+        <div class="strips">
+          <article class="strip-item paste">
+            <div class="paper">
+              <div>
+                <span class="kick">Opinion</span>
+                <h3 class="hl"><a href="#">I was an airborne cameraman for decades. This is why we need to retire news choppers</a></h3>
+                <span class="by"><b>Scott Shulman</b>, 2 hours ago</span>
+              </div>
+              <img src="img/183785.jpg" alt="A cameraman leans out of a yellow news helicopter">
+            </div>
+          </article>
+          <article class="strip-item paste">
+            <div class="paper">
+              <div>
+                <span class="kick">News</span>
+                <h3 class="hl"><a href="#">The U.S. government quietly just made it legal to go through your phone at the border</a></h3>
+                <span class="by"><b>Izzy Ramirez</b>, 6 hours ago</span>
+              </div>
+              <img src="img/183746.jpg" alt="The border wall running through hills between San Diego and Tijuana">
+            </div>
+          </article>
+          <article class="strip-item paste">
+            <div class="paper">
+              <div>
+                <span class="kick">Politics</span>
+                <h3 class="hl"><a href="#">The no-BS guide to what Karen Bass and Nithya Raman plan to do if they&rsquo;re elected</a></h3>
+                <span class="by"><b>Sam Ribakoff</b>, 8 hours ago</span>
+              </div>
+              <img src="img/183598.jpg" alt="Illustrated portraits of Karen Bass and Nithya Raman">
+            </div>
+          </article>
+          <article class="strip-item paste">
+            <div class="paper">
+              <div>
+                <span class="kick">Opinion</span>
+                <h3 class="hl"><a href="#">Long Beach&rsquo;s &lsquo;Vibe City&rsquo; rebrand is a slap in the face to locals living in poverty</a></h3>
+                <span class="by"><b>Myriam Gurba</b>, 11 hours ago</span>
+              </div>
+              <img src="img/183710.jpg" alt="The Long Beach Vibe City sign over a fountain plaza">
+            </div>
+          </article>
+          <article class="strip-item paste">
+            <div class="paper">
+              <div>
+                <span class="kick">Culture</span>
+                <h3 class="hl"><a href="#">This 21-year-old bagpiper plays through tear gas to &lsquo;fire up&rsquo; anti-ICE protesters</a></h3>
+                <span class="by"><b>Julianne Le</b>, yesterday</span>
+              </div>
+              <img src="img/176038.jpg" alt="A young bagpiper plays at a protest">
+            </div>
+          </article>
+        </div>
+
+        <article class="p-ice paste">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="paper">
+            <div class="duo"><img src="img/183737.jpg" alt="Federal agents pin a man to the ground during an arrest"></div>
+            <div class="txt">
+              <span class="kick">ICE Watch</span>
+              <h2 class="hl"><a href="#">Data shows City of L.A. as extreme hotspot for ICE arrests</a></h2>
+              <p>L.A. TACO broke down the nearly 4,000 logged apprehensions in L.A. County by neighborhood and city.</p>
+              <span class="by"><b>Memo Torres</b>, 4 hours ago</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOD -->
+  <section class="food" aria-labelledby="food-h">
+    <div class="wrap">
+      <div class="label-row">
+        <h2 class="label" id="food-h">Food &amp; tacos</h2>
+        <a class="more" href="#">More food stories</a>
+      </div>
+      <div class="grid12">
+        <article class="food-lead">
+          <div class="pic paste">
+            <div class="paper"><img src="img/180786.jpg" alt="A carne asada taco on a flour tortilla in a red paper-lined tray"></div>
+          </div>
+          <div class="food-strip paste">
+            <div class="paper">
+              <span class="kick">Tacos</span>
+              <h2 class="hl"><a href="#">I found the new best carne asada taco in L.A., and it&rsquo;s in a parking lot in Silver Lake</a></h2>
+              <p>Even the beef tallow-enriched, organic wheat flour tortilla alone is worth a visit.</p>
+              <span class="by">By <b>Javier Cabral</b></span>
+            </div>
+          </div>
+        </article>
+
+        <div class="food-side">
+          <article class="mini paste">
+            <div class="paper">
+              <img src="img/183203.jpg" alt="Three family members in white shirts in front of their taquería's painted sign" style="object-position:50% 40%">
+              <div class="txt">
+                <span class="kick">Tacos</span>
+                <h3 class="hl"><a href="#">They had degrees, careers and dreams. Then they came home to grow the family taquería</a></h3>
+                <span class="by">By <b>Karina Soriano</b></span>
+              </div>
+            </div>
+          </article>
+          <article class="mini paste">
+            <div class="paper">
+              <img src="img/183752.jpg" alt="Two plates of mana'eesh flatbreads with salad">
+              <div class="txt">
+                <span class="kick">Weekend Eats</span>
+                <h3 class="hl"><a href="#">Palestinian-and-Syrian street food with handmade pita and mana&rsquo;eesh in Silver Lake</a></h3>
+                <span class="by">By <b>Hadley Tomicki</b></span>
+              </div>
+            </div>
+          </article>
+          <article class="mini paste">
+            <div class="paper">
+              <img src="img/182892.jpg" alt="Overhead view of poke bowls on a wooden table">
+              <div class="txt">
+                <span class="kick">Food</span>
+                <h3 class="hl"><a href="#">L.A.&rsquo;s most exclusive poke comes from a car trunk and sells out in minutes</a></h3>
+                <span class="by">By <b>Marina Watanabe</b></span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDES -->
+  <section class="guides" aria-labelledby="guides-h">
+    <div class="wrap">
+      <div class="label-row">
+        <h2 class="label" id="guides-h">The guides</h2>
+        <a class="more" href="#">Every L.A. TACO guide</a>
+      </div>
+      <div class="grid12 cards">
+        <article class="card c-y paste">
+          <div class="body">
+            <div class="count" aria-hidden="true">19</div>
+            <h3 class="stack"><a href="#"><span class="sr">The 19 </span><span class="fl"><span>best carne</span></span><span class="fl"><span>asada tacos</span></span><span class="fl"><span>in L.A.</span></span></a></h3>
+            <span class="by">By <b>Javier Cabral</b> &amp; L.A. TACO Staff</span>
+            <div class="swatch"><span class="tape" aria-hidden="true"></span><img src="img/tacos.jpg" alt="Carne asada tacos wrapped in blue and white paper"></div>
+          </div>
+        </article>
+        <article class="card c-o paste">
+          <div class="body">
+            <div class="count" aria-hidden="true">21</div>
+            <h3 class="stack"><a href="#"><span class="sr">The 21 </span><span class="fl"><span>best street</span></span><span class="fl"><span>kebabs</span></span><span class="fl"><span>in L.A.</span></span></a></h3>
+            <span class="by">An L.A. TACO guide</span>
+            <div class="swatch"><span class="tape" aria-hidden="true"></span><img src="img/182778.jpg" alt="Kebab skewers grilling over smoke"></div>
+          </div>
+        </article>
+        <article class="card c-p paste">
+          <div class="body">
+            <div class="count" aria-hidden="true">27</div>
+            <h3 class="stack"><a href="#"><span class="sr">L.A.'s 27 </span><span class="fl"><span>best</span></span><span class="fl"><span>record shops</span></span><span class="fl"><span>in L.A.</span></span></a></h3>
+            <span class="by">By <b>Hadley Tomicki</b></span>
+            <div class="swatch"><span class="tape" aria-hidden="true"></span><img src="img/173124.jpg" alt="A red record-store mural on a storefront"></div>
+          </div>
+        </article>
+        <article class="card c-b paste">
+          <div class="body">
+            <div class="count" aria-hidden="true">29</div>
+            <h3 class="stack"><a href="#"><span class="sr">L.A.'s 29 </span><span class="fl"><span>best</span></span><span class="fl"><span>independent</span></span><span class="fl"><span>bookshops</span></span></a></h3>
+            <span class="by">An L.A. TACO guide</span>
+            <div class="swatch"><span class="tape" aria-hidden="true"></span><img src="img/170528.jpg" alt="A worn copy of Orwell's 1984 half-buried in sand"></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO ESSAY -->
+  <section class="essay" aria-label="Photo essay">
+    <figure class="essay-frame paste" style="margin-block:0">
+      <span class="tape tl" aria-hidden="true"></span>
+      <span class="tape tr" aria-hidden="true"></span>
+      <span class="tape bl" aria-hidden="true"></span>
+      <span class="tape br" aria-hidden="true"></span>
+      <div class="paper"><img src="img/182414.jpg" alt="Three men in cowboy hats pose together inside a nightclub"></div>
+      <figcaption class="essay-cap paste">
+        <div class="paper">
+          <span class="kick">Photo essay</span>
+          <h2 class="hl"><a href="#">East Hollywood gay club famous for its &lsquo;Vaquero Nights&rsquo; turns 35</a></h2>
+          <span class="by">By <b>Sean Maung</b> and <b>Julianne Le</b></span>
+        </div>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- MEMBERS -->
+  <section class="members" aria-labelledby="mem-h">
+    <div class="wrap grid12">
+      <a class="p-mag paste" href="#">
+        <span class="tape" aria-hidden="true"></span>
+        <span class="paper grainy" style="display:block">
+          <img src="img/magazine.jpg" alt="Cover of L.A. TACO Magazine, Summer 2026: a hand pressed against a riot shield">
+          <span class="cap by"><b>L.A. TACO Magazine</b>Summer 2026. 48 pages, $35, with a sticker and the L.A. TACO POST.</span>
+        </span>
+      </a>
+      <a class="p-zine paste" href="#">
+        <span class="tape" aria-hidden="true"></span>
+        <span class="paper" style="display:block">
+          <img src="img/182539.jpg" alt="Red flyer for the L.A. TACO zine release party with six punk bands">
+          <span class="cap by"><b>Zine release show</b>Six L.A. punk bands, one Friday night.</span>
+        </span>
+      </a>
+      <div class="p-members paste">
+        <div class="sheet">
+          <h2 class="stack" id="mem-h">
+            <span class="fl"><span>Keep</span></span>
+            <span class="fl"><span>L.A. TACO</span></span>
+            <span class="fl deluxe"><span class="chroma chroma--deluxe" data-text="ON THE"><span>on the</span></span></span>
+            <span class="fl"><span>streets</span></span>
+          </h2>
+          <div class="pitch">
+            <p>L.A. TACO is independent and runs on its readers, not on billionaires. Members get every story, two members-only newsletters, free entry to Taco Madness, and a card good for free tacos at Mariscos Jalisco, Guerrilla Tacos and Carnitas El Momo.</p>
+          </div>
+        </div>
+        <div class="tabs" role="list">
+          <a class="tab wide" href="#" role="listitem">
+            <span class="t1">Local</span>
+            <span class="t2">$59 a year</span>
+            <span class="t3">That&rsquo;s $4.92 a month. The membership that keeps the lights on.</span>
+            <span class="t4">Join as a Local</span>
+          </a>
+          <a class="tab wide" href="#" role="listitem">
+            <span class="t1">Loyal</span>
+            <span class="t2">$99 a year</span>
+            <span class="t3">Everything in Local, plus your pick of a shirt, hat or zine.</span>
+            <span class="t4">Join as a Loyal</span>
+          </a>
+          <div class="tab narrow" role="listitem"><span>Free tacos at partner spots</span></div>
+          <div class="tab narrow" role="listitem"><span>Taco Madness entry</span></div>
+          <div class="tab narrow gone" aria-hidden="true"></div>
+          <div class="tab narrow" role="listitem"><span>20% off merch</span></div>
+          <div class="tab narrow" role="listitem"><span>Every story, all year</span></div>
+          <div class="tab narrow" role="listitem"><span>Two members-only newsletters</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap grid12">
+    <div class="brand">
+      <a class="logo-solid" href="#" aria-label="L.A. TACO home"></a>
+      <p class="tag">Celebrating the taco lifestyle in Los Angeles.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="#">News</a></li>
+        <li><a href="#">Food &amp; Tacos</a></li>
+        <li><a href="#">Explore L.A.</a></li>
+        <li><a href="#">Guides</a></li>
+        <li><a href="#">Taco Madness</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Member log in</a></li>
+      </ul>
+    </nav>
+    <div class="mag">
+      <h2>L.A. TACO Magazine is out.</h2>
+      <p>Summer 2026, Vol. 2, Issue 1: 48 pages, 11&times;11 inches, $35. Comes with a sticker and the L.A. TACO POST tabloid tucked inside. <a class="u" href="#">Get the magazine</a></p>
+      <h2 style="margin-top:22px">The free newsletter.</h2>
+      <p style="margin-bottom:0">L.A. stories, neighborhood finds and something good to eat, straight from the newsroom.</p>
+      <form action="#" onsubmit="return false">
+        <label class="sr" for="nl-email">Email address</label>
+        <input id="nl-email" type="email" placeholder="you@email.com" autocomplete="email">
+        <button type="submit">Sign me up</button>
+      </form>
+    </div>
+    <div class="divider"><span>&copy; 2026 L.A. TACO. Independent and reader-funded since 2006.</span><span>James Beard Award winner, 2024</span></div>
+  </div>
+</footer>
+
+<script>
+/* Colby-style fitter: each .fl line is scaled so its text spans the container width exactly. */
+(function () {
+  const BASE = 200;
+  function fit() {
+    const lines = Array.from(document.querySelectorAll('.fl'));
+    lines.forEach(l => { l.style.fontSize = BASE + 'px'; });
+    const sizes = lines.map(l => {
+      const inner = l.firstElementChild;
+      const w = inner ? inner.offsetWidth : 0;
+      return w ? BASE * l.clientWidth / w : null;
+    });
+    lines.forEach((l, i) => { if (sizes[i]) l.style.fontSize = sizes[i].toFixed(2) + 'px'; });
+  }
+  let raf;
+  window.addEventListener('resize', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fit); });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(fit);
+  fit();
+})();
+</script>
+<script src="shared/switcher.js" defer></script>
+</body>
+</html>
