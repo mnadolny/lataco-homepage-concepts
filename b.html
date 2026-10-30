@@ -249,19 +249,30 @@ h1, h2, h3, p { margin: 0; }
   .wrap { width: calc(100% - 40px); }
   .grid { grid-template-columns: 1fr; row-gap: 48px; }
   .grid > * { grid-column: 1 / -1 !important; }
-  .masthead__in { height: auto; grid-template-columns: 1fr; justify-items: center; gap: 18px; padding: 44px 0 40px; text-align: center; }
-  .masthead__tag span { display: inline; }
-  .masthead .logo { width: min(420px, 100%); margin: -10% 0 -19%; }
-  .join-card { justify-self: center; }
-  .navstrip .wrap { height: auto; flex-wrap: wrap; gap: 12px; padding: 14px 0; }
-  .navstrip ul { gap: 18px; flex-wrap: wrap; }
+  .masthead__in { height: auto; grid-template-columns: 1fr; justify-items: center; gap: 14px; padding: 26px 0 28px; text-align: center; }
+  /* wrap between phrases, never inside one, so "Los Angeles." stays together */
+  .masthead__tag { font-size: 16px; }
+  .masthead__tag span { display: inline; white-space: nowrap; }
+  /* trim the mask's empty top/bottom as a share of the logo's own width (plain % would track the container and overshoot once the logo caps at 420px) */
+  .masthead .logo { --lw: min(420px, 100%); width: var(--lw); margin: calc(var(--lw) * -.1) 0 calc(var(--lw) * -.12); }
+  .join-card { justify-self: center; font-size: 22px; padding: 12px 20px 13px; }
+  /* two full-width rows: sections, then search / log in / date, split by a hairline */
+  .navstrip .wrap { height: auto; flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
+  .navstrip ul { justify-content: space-between; gap: 0; padding: 16px 0 14px; }
+  .navstrip__util { justify-content: space-between; gap: 0; height: 48px; border-top: 1px solid var(--cream-rule); }
+  .search { margin: 0 0 0 -10px; }
   .hero__img { height: 420px; }
   .hero__hang { margin-top: -80px; }
   .hero__sign { width: auto; padding: 26px 24px 28px; }
   .hero__sign .hed { font-size: 38px; }
-  .fascia__in { min-height: 0; padding: 40px 0; text-align: center; }
+  .fascia__in { min-height: 0; padding: 28px 0 24px; text-align: center; }
+  /* section bodies start close under their sign */
+  .tacos, .guides__body, .members__body { padding-top: 16px; }
   .fascia__link--end { align-self: center; }
-  .f-mus { --sign: 17vw; } .f-nop { --sign: 14.5vw; } .f-dod { --sign: 10.6vw; } .f-red { --sign: 7.9vw; }
+  .f-mus { --sign: 17vw; } .f-nop { --sign: 14.5vw; } .f-dod { --sign: 10.6vw; } .f-red { --sign: 10.6vw; }
+  /* EXPLORE L.A. breaks after EXPLORE so it sets at the same size as MEMBERS; the chroma layers wrap the same way */
+  .f-red .chroma { white-space: normal; }
+  .f-red .fascia__in { gap: 14px; }
   .nb { white-space: normal; }
   .stories { padding-top: 48px; }
   .board__in { padding: 36px 24px; }
@@ -273,8 +284,11 @@ h1, h2, h3, p { margin: 0; }
   .mlead__pic { height: 240px; }
   .mlead__hed { font-size: 32px; }
   .mrows { grid-template-columns: 1fr; }
-  .mrows a { grid-template-columns: 112px 1fr; gap: 16px; }
-  .mrows img { width: 112px; height: 84px; }
+  /* text first, thumbnail on the right */
+  .mrows a { grid-template-columns: 1fr 112px; gap: 16px; }
+  .mrows img { width: 112px; height: 84px; order: 2; }
+  .mrows .mmeta { flex-wrap: wrap; column-gap: 12px; row-gap: 2px; }
+  .mrows .mmeta > * { white-space: nowrap; }
   .mrows .mhed { font-size: 20px; }
   .feature .window { --h: 320px; }
   .feature__tag { margin: -40px 12px 0; }
