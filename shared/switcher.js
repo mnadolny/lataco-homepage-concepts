@@ -16,13 +16,13 @@
     .join('');
   const css = document.createElement('style');
   css.textContent = `
-    .lat-switcher{position:fixed;right:16px;bottom:16px;z-index:9999;display:flex;gap:2px;padding:4px;
+    .lat-switcher{position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:2px;padding:4px;
       background:#1b1714;border-radius:999px;box-shadow:0 6px 24px rgba(0,0,0,.35);font:600 13px/1 "IBM Plex Sans",system-ui,sans-serif}
     .lat-switcher a{color:#f7f4e9;text-decoration:none;padding:9px 14px;border-radius:999px;white-space:pre}
     .lat-switcher a:hover{background:rgba(255,255,255,.12)}
     .lat-switcher a[aria-current]{background:#f4c542;color:#1b1714}
     .lat-switcher a:focus-visible{outline:2px solid #f4c542;outline-offset:2px}
-    @media (max-width:700px){.lat-switcher{left:8px;right:8px;overflow-x:auto}.lat-switcher a{padding:8px 9px}}`;
+    @media (max-width:700px){.lat-switcher{left:8px;max-width:calc(100% - 16px);overflow-x:auto}.lat-switcher a{padding:8px 9px}}`;
   document.head.append(css);
   document.body.append(nav);
 })();
