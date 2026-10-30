@@ -4,8 +4,8 @@
   if (location.hostname.endsWith(".github.io")) return; // hidden on the shared client links
   const concepts = [
     ['index.html', 'Both'],
-    ['a.html', 'A  Primera Plana'],
-    ['b.html', 'B  Rótulo'],
+    ['a.html', 'Version A'],
+    ['b.html', 'Version B'],
   ];
   const here = location.pathname.split('/').pop() || 'index.html';
   const nav = document.createElement('nav');
