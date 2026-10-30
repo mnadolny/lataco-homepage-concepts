@@ -91,6 +91,9 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .util { display: flex; align-items: center; gap: 24px; flex: none; }
 .util .login { font: 500 14px/1 var(--sans); color: var(--paper); }
 .util .login:hover { text-decoration: underline; text-underline-offset: 4px; }
+.search { display: grid; place-items: center; width: 40px; height: 40px; margin: 0 -8px; color: var(--paper); }
+.search:hover { color: var(--gold); }
+.search svg { width: 22px; height: 22px; }
 .edition { background: var(--masa); border-bottom: 1px solid var(--rule); }
 .edition .wrap { display: flex; justify-content: space-between; align-items: center; height: 38px; font: 500 13px/1 var(--sans); color: var(--ink); }
 
@@ -317,6 +320,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
       </ul>
     </nav>
     <div class="util">
+      <a class="search" href="#" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></a>
       <a class="login" href="#">Member log in</a>
       <a class="btn" href="#">Join L.A. TACO</a>
     </div>

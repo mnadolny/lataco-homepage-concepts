@@ -81,6 +81,8 @@ h1, h2, h3, p { margin: 0; }
 .navstrip a { font: 600 15px/1 var(--sans); }
 .navstrip a:hover { color: var(--mus); }
 .navstrip__util { display: flex; align-items: center; gap: 28px; font: 700 14px/1 var(--sans); }
+.search { display: grid; place-items: center; width: 40px; height: 40px; margin: 0 -10px; }
+.search svg { width: 20px; height: 20px; }
 
 /* ---------- 2. Hero shop window ---------- */
 /* v2: the sign hangs from the left column instead of the center, overlapping the photo by 205px */
@@ -177,6 +179,8 @@ h1, h2, h3, p { margin: 0; }
 .mcard__title { font: 900 50px/1 var(--sutro); letter-spacing: -0.01em; }
 .mcard__perk { font: italic 700 23px/1.2 var(--sutro); color: var(--red); margin-top: 4px; }
 .mcard__spots { font: 600 14px/1.3 var(--sans-cond); margin-top: 4px; }
+/* TACOS rubber stamp: 90px at (459, 262) on the 560 x 353 Figma card, in % so it scales with the card */
+.mcard__stamp { position: absolute; left: 82.05%; top: 74.22%; width: 16.05%; height: auto; z-index: 1; }
 .dia { position: absolute; width: 14px; height: 14px; background: var(--red); border: 2px solid var(--comal); transform: rotate(45deg); z-index: 1; }
 .dia--tl { top: 4px; left: 4px; } .dia--tr { top: 4px; right: 4px; }
 .dia--bl { bottom: 4px; left: 4px; } .dia--br { bottom: 4px; right: 4px; }
@@ -311,6 +315,7 @@ h1, h2, h3, p { margin: 0; }
       <li><a href="#">Shop</a></li>
     </ul>
     <div class="navstrip__util">
+      <a class="search" href="#" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></a>
       <a href="#">Member log in</a>
       <time datetime="2026-10-10">Saturday, October 10</time>
     </div>
@@ -514,6 +519,7 @@ h1, h2, h3, p { margin: 0; }
           <p class="mcard__perk">Good for free tacos at partner spots</p>
           <p class="mcard__spots">Mariscos Jalisco, Guerrilla Tacos, Carnitas El Momo</p>
         </div>
+        <img class="mcard__stamp" src="img/v2/stamp-tacos.png" alt="">
         <span class="dia dia--tl"></span><span class="dia dia--tr"></span><span class="dia dia--bl"></span><span class="dia dia--br"></span>
       </div>
     </div>
