@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>L.A. TACO — Concept B: Rótulo</title>
 <link rel="stylesheet" href="shared/fonts.css">
+<!-- v2 sets deks in Source Serif 4 Bold, which shared/fonts.css doesn't load -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&display=swap">
+<!-- v2: rebuilt from the Figma revisions (frame 4568:295, "B — Rótulo · Homepage 1440").
+     The original concept stays in b.html for reference. -->
 <style>
 :root {
   --red: #D7261E;
@@ -13,6 +17,9 @@
   --dod: #005A9C;
   --cream: #FFF4DC;
   --comal: #1B1714;
+  --cream-muted: rgba(255, 244, 220, .78);
+  --cream-line: rgba(255, 244, 220, .55);
+  --cream-rule: rgba(255, 244, 220, .18);
   --col: calc((min(1320px, 100vw - 120px) - 264px) / 12);
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -28,39 +35,44 @@ h1, h2, h3, p { margin: 0; }
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
 
 /* ---------- Shared sign-painter parts ---------- */
-/* double pinstripe: two 2px lines inset 12px and 20px from the edge */
 .pin { background: var(--g); }
 
-.kicker { display: block; font: italic 700 18px/1.2 var(--sutro); color: var(--red); margin-bottom: 10px; }
+.kicker { display: block; font: italic 700 18px/1.2 var(--sutro); color: var(--red); margin-bottom: 8px; }
 .hed { font-family: var(--sutro); font-weight: 800; letter-spacing: -0.005em; line-height: 1.02; text-wrap: balance; }
-.dek { font: 400 18px/1.5 var(--serif); max-width: 62ch; }
-.by { font: 500 14px/1.4 var(--sans); }
+/* v2: deks and bylines go bold */
+.dek { font: 700 18px/1.5 var(--serif); max-width: 62ch; }
+.by { font: 700 14px/1.4 var(--sans); }
 .story a:hover .hed, a.story:hover .hed { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
 
-/* Section fascia: a painted sign band over the shop window */
-.fascia { min-height: 220px; display: grid; align-items: center; }
-.fascia__in { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "sign sign" "note link"; align-items: end; row-gap: 6px; padding: 44px 36px 38px; }
-.fascia h2 { grid-area: sign; font-size: var(--sign, 160px); font-weight: 400; line-height: 1; margin: 0; text-align: center; }
-.fascia__note { grid-area: note; }
-.fascia__link { grid-area: link; }
-.fascia h2 .chroma { line-height: .9; }
-.fascia__note { font: italic 500 19px/1.25 var(--sutro); color: var(--ink); }
-.fascia__link { justify-self: end; font: 600 15px/1.2 var(--sans); color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; text-align: right; }
+/* Section fascia: a painted sign band. v2 drops the side note and centers the link under the sign */
+.fascia__in { min-height: 220px; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 44px 0 38px; }
+.fascia h2 { display: flex; justify-content: center; font-size: var(--sign, 160px); font-weight: 400; line-height: 1; margin: 0; }
+/* drop the body-font strut so the sign is exactly one Sutro line tall */
+.fascia h2 .chroma > span, .board__head .chroma > span { display: block; }
+.fascia__link { font: 600 15px/1.2 var(--sans); color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
 .fascia__link:hover { text-decoration-thickness: 4px; }
+.fascia__link--end { align-self: flex-end; }
 
-/* Framed shop windows */
-.window { position: relative; margin: 0; background: var(--comal); width: 100%; }
-.window img { width: 100%; height: var(--h, 260px); object-fit: cover; }
+/* B / Story: shop-window photo, kicker, headline, byline */
+.window { position: relative; margin: 0 0 24px; background: var(--comal); width: 100%; }
+.window img { width: 100%; height: var(--h, 250px); object-fit: cover; }
+.story .by { margin-top: 8px; }
+.story .hed { font-size: 25px; }
+.stories { padding: 16px 0 92px; }
+.stories .story { grid-column: span 4; }
+/* small "View all" over the row's top-right corner; absolute so it doesn't push the row down */
+.stories .wrap { position: relative; }
+.stories__all { position: absolute; right: 0; bottom: 100%; margin-bottom: 26px; font: 600 14px/1.2 var(--sans); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.stories__all:hover { text-decoration-thickness: 4px; }
+.stories .story:nth-child(1) img, .explore .story:nth-child(1) img { object-position: 50% 30%; }
 
 /* ---------- 1. Masthead fascia ---------- */
-.masthead { --g: var(--red); --line: var(--cream); color: var(--cream); }
+.masthead { --g: var(--red); color: var(--cream); }
 .masthead__in { height: 200px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
-.masthead__tag { font: italic 500 18px/1.3 var(--sutro); }
+.masthead__tag { font: italic 700 18px/1.3 var(--sutro); }
 .masthead__tag span { display: block; }
 .masthead .logo { width: 560px; margin: -41px 0 -82px; left: 18px; /* optically center the inked area of the mask */ --logo-fill: var(--cream); --logo-line: var(--comal); }
-.join-card { justify-self: end; display: block; background: var(--mus); color: var(--comal); padding: 14px 22px 15px; text-align: center; transition: background .15s ease; }
-.join-card b { display: block; font: 800 26px/1 var(--sutro); letter-spacing: -0.005em; }
-.join-card small { display: block; font: 600 14px/1.2 var(--sans-cond); margin-top: 5px; }
+.join-card { justify-self: end; display: block; background: var(--mus); color: var(--comal); padding: 14px 22px 15px; text-align: center; font: 800 26px/1 var(--sutro); letter-spacing: -0.005em; transition: background .15s ease; }
 .join-card:hover { background: var(--cream); }
 
 .navstrip { background: var(--comal); color: var(--cream); }
@@ -68,97 +80,83 @@ h1, h2, h3, p { margin: 0; }
 .navstrip ul { display: flex; gap: 36px; list-style: none; margin: 0; padding: 0; }
 .navstrip a { font: 600 15px/1 var(--sans); }
 .navstrip a:hover { color: var(--mus); }
-.navstrip__util { display: flex; align-items: center; gap: 28px; font: 500 14px/1 var(--sans); }
-.navstrip__util time { color: rgba(255, 244, 220, .78); }
+.navstrip__util { display: flex; align-items: center; gap: 28px; font: 700 14px/1 var(--sans); }
+.search { display: grid; place-items: center; width: 40px; height: 40px; margin: 0 -10px; }
+.search svg { width: 20px; height: 20px; }
 
 /* ---------- 2. Hero shop window ---------- */
-.hero { display: grid; grid-template-rows: 800px 124px; }
-.hero__img { grid-area: 1 / 1 / 2 / 2; width: 100%; height: 800px; object-fit: cover; object-position: 50% 72%; }
-.hero__hang { grid-area: 1 / 1 / 3 / 2; align-self: end; justify-self: center; position: relative; z-index: 2; padding-bottom: 14px; }
-.hero__sign { width: calc(var(--col) * 6 + 120px); background: var(--mus); padding: 28px 36px 32px; transform-origin: 50% 0; }
-.hero__sign .kicker { font-size: 18px; margin-bottom: 10px; }
+/* v2: the sign hangs from the left column instead of the center, overlapping the photo by 205px */
+.hero { padding-bottom: 14px; }
+.hero__img { width: 100%; height: 800px; object-fit: cover; object-position: 50% 72%; }
+.hero__hang { position: relative; z-index: 2; margin-top: -205px; }
+.hero__sign { width: calc(var(--col) * 7 + 152px); background: var(--mus); padding: 28px 36px 32px; transform-origin: 50% 0; }
+.hero__sign .kicker { margin-bottom: 12px; }
 .nb { white-space: nowrap; }
 .hero__sign .hed { font-size: 50px; line-height: 1; letter-spacing: -0.012em; }
-.hero__sign .dek { font-size: 18px; margin-top: 16px; max-width: 34em; }
+.hero__sign .dek { margin-top: 12px; max-width: none; }
 .hero__sign .by { margin-top: 12px; }
 .hero__sign a:hover .hed { text-decoration: underline; text-decoration-thickness: 5px; text-underline-offset: .1em; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .hero__sign { animation: hang 900ms cubic-bezier(.3, .7, .4, 1) 150ms both; }
-  @keyframes hang {
-    0%   { transform: translateY(-24px) rotate(-2deg); opacity: 0; }
-    18%  { opacity: 1; }
-    55%  { transform: translateY(5px) rotate(.7deg); }
-    78%  { transform: translateY(-2px) rotate(-.25deg); }
-    100% { transform: none; opacity: 1; }
-  }
-}
 
-/* ---------- 3. Latest: the menu board ---------- */
-.latest { padding: 64px 0 120px; }
-.board { background: var(--comal); color: var(--cream); box-shadow: inset 0 0 0 12px var(--comal), inset 0 0 0 13px rgba(255, 244, 220, .55); padding: 56px 72px 52px; }
-.board__head { text-align: center; font-size: 96px; line-height: 1; margin-bottom: 36px; }
+/* ---------- 3. Latest: the menu board, now headed by Taco Madness ---------- */
+.latest { padding: 20px 0 60px; }
+.board { background: var(--comal); color: var(--cream); padding: 12px; }
+.board__in { border: 1px solid var(--cream-line); padding: 44px 60px 40px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; }
+/* Figma sets this at 96px in the Rye stand-in; real Sutro Deluxe is ~30% wider, so 72px keeps it inside the board */
+.board__head { display: flex; flex-direction: column; align-items: center; font-size: 72px; line-height: 1; font-weight: 400; }
 .board__head .chroma { --c-fill: var(--mus); --c-primary: var(--cream); --c-inline: var(--red); }
-.board__sub { display: block; font: italic 500 19px/1.3 var(--sutro); color: var(--cream); margin-top: 12px; opacity: .9; }
-/* lead story + four photo rows; category above the headline, time beside the author */
-.mlead { display: grid; grid-template-columns: 7fr 5fr; gap: 40px; align-items: center; padding-bottom: 36px; }
+.board__sub { display: block; font: italic 700 19px/1.3 var(--sutro); color: var(--cream); margin-top: 12px; }
+/* lead story + two photo rows; category above the headline, time beside the author */
+.mlead { display: grid; grid-template-columns: 663fr 471fr; gap: 40px; align-items: center; }
 .mlead__pic { width: 100%; height: 420px; object-fit: cover; display: block; }
-.mlead .mkick { font-size: 20px; }
+.mlead .mkick { font-size: 20px; margin-bottom: 12px; }
 .mlead__hed { font: 800 44px/1.04 var(--sutro); letter-spacing: -0.008em; text-wrap: pretty; }
-.mlead__dek { font: 400 19px/1.5 var(--serif); color: rgba(255, 244, 220, .88); margin-top: 16px; max-width: 34em; }
+.mlead__dek { font: 700 19px/1.5 var(--serif); color: var(--cream-muted); margin-top: 12px; max-width: 34em; }
 .mkick { display: block; font: italic 700 17px/1.2 var(--sutro); color: var(--mus); margin-bottom: 10px; }
-.mmeta { display: flex; gap: 14px; margin-top: 14px; font: 500 14px/1.3 var(--sans); color: rgba(255, 244, 220, .72); }
+.mmeta { display: flex; gap: 14px; margin-top: 14px; font: 700 14px/1.3 var(--sans); color: var(--cream-muted); }
 .mmeta b { font-weight: 600; color: var(--cream); }
 .mrows { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; }
-.mrows li { border-top: 1px solid rgba(255, 244, 220, .16); }
+.mrows li { border-top: 1px solid var(--cream-rule); }
 .mrows a { display: grid; grid-template-columns: 168px 1fr; gap: 22px; align-items: start; padding: 24px 0; }
 .mrows img { width: 168px; height: 118px; object-fit: cover; display: block; }
-.mrows .mhed { font: 700 23px/1.15 var(--sutro); text-wrap: pretty; }
+.mrows .mhed { display: block; font: 700 23px/1.15 var(--sutro); text-wrap: pretty; }
+.mrows .mmeta { margin-top: 14px; }
 .mlead a:hover .mlead__hed, .mrows a:hover .mhed { color: var(--mus); }
-.board__foot { margin-top: 32px; padding-top: 26px; border-top: 1px solid rgba(255, 244, 220, .22); display: flex; justify-content: space-between; align-items: center; }
-.board__foot p { font: italic 500 18px/1.3 var(--sutro); opacity: .85; }
 .btn { display: inline-block; font: 600 15px/1 var(--sans); padding: 14px 20px; background: var(--mus); color: var(--comal); border: 0; transition: background .15s ease; }
 .btn:hover { background: var(--cream); }
 
-/* ---------- 4. Tacos ---------- */
-.f-mus { --g: var(--mus); --line: var(--comal); --ink: var(--comal); --sign: 170px; }
+/* ---------- 4. Tacos (v2: the whole section sits on mustard) ---------- */
+.f-mus { --g: var(--mus); --ink: var(--comal); --sign: 170px; }
 .f-mus .chroma { --c-fill: var(--red); --c-primary: var(--comal); --c-inline: var(--cream); }
-.tacos { padding: 88px 0 120px; }
+.tacos { background: var(--mus); padding: 40px 0 80px; }
 .feature { grid-column: 1 / 9; }
-.feature .window { --bw: 6px; --so: 16px; --sc: var(--red); --h: 600px; }
+.feature .window { --h: 600px; margin: 0; }
 .feature .window img { object-position: 50% 62%; }
-.feature__tag { position: relative; z-index: 1; margin: -84px 72px 0 36px; background: var(--cream); padding: 28px 36px 32px; }
+/* v2: the price tag flips to a comal tag with cream type */
+.feature__tag { position: relative; z-index: 1; margin: -84px 72px 0 36px; background: var(--comal); color: var(--cream); padding: 28px 36px 32px; }
+.feature__tag .kicker { color: var(--mus); margin-bottom: 12px; }
 .feature__tag .hed { font-size: 44px; line-height: 1.02; }
-.feature__tag .dek { margin-top: 14px; }
+.feature__tag .dek { margin-top: 12px; }
 .feature__tag .by { margin-top: 12px; }
 .side { grid-column: 9 / 13; display: grid; gap: 44px; align-content: start; }
-.side .window { --bw: 4px; --h: 236px; }
-.side .story:nth-child(1) .window { --sc: var(--nop); }
-.side .story:nth-child(2) .window { --sc: var(--dod); }
-.side .hed { font-size: 27px; margin-top: 24px; }
-.side .kicker { margin-top: 24px; margin-bottom: 8px; }
-.side .kicker + .hed { margin-top: 0; }
-.side .by { margin-top: 10px; }
-.row3 { margin-top: 96px; row-gap: 48px; }
+.side .story:nth-child(1) img { object-position: 50% 35%; }
+.side .story:nth-child(2) img { object-position: 40% 12%; }
+.row3 { margin-top: 40px; row-gap: 48px; }
 .row3 .story { grid-column: span 4; }
-.row3 .window { --bw: 3px; --so: 8px; --h: 250px; }
-.row3 .kicker { margin-top: 22px; margin-bottom: 8px; }
-.row3 .hed { font-size: 25px; }
-.row3 .by { margin-top: 10px; }
 
 /* ---------- 5. Guides ---------- */
 .guides { background: var(--nop); color: var(--cream); }
-.f-nop { --g: var(--nop); --line: var(--cream); --ink: var(--cream); --sign: 160px; }
+.f-nop { --g: var(--nop); --ink: var(--cream); --sign: 160px; }
 .f-nop .chroma { --c-fill: var(--mus); --c-primary: var(--comal); --c-inline: var(--cream); }
-.guides__body { padding: 88px 0 112px; }
+.guides__body { padding: 40px 0 80px; }
 .gcard { grid-column: span 3; position: relative; display: block; background: var(--cream); color: var(--comal); }
-.gcard:hover .hed { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .gcard img { width: 100%; height: 232px; object-fit: cover; }
 .gcard__txt { padding: 20px 22px 24px; }
 .gcard .hed { font-size: 26px; line-height: 1.04; }
-.gcard .by { margin-top: 10px; color: rgba(27, 23, 20, .8); }
+.gcard .by { margin-top: 10px; }
 .gcard:hover .hed { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: .12em; }
-.star { position: absolute; top: -58px; right: -26px; width: 168px; height: 168px; transform: rotate(8deg); filter: drop-shadow(5px 5px 0 var(--comal)); }
+/* v2: the burst sits lower and tighter to the card's corner */
+.star { position: absolute; top: -47px; right: -4px; width: 168px; height: 168px; transform: rotate(8deg); filter: drop-shadow(5px 5px 0 var(--comal)); }
 .star::before, .star__in { position: absolute; clip-path: var(--burst); }
 .star::before { content: ""; inset: 0; background: var(--comal); }
 .star__in { inset: 4px; background: var(--mus); display: grid; place-content: center; text-align: center; color: var(--comal); }
@@ -168,82 +166,84 @@ h1, h2, h3, p { margin: 0; }
 
 /* ---------- 6. Members ---------- */
 .members { background: var(--dod); color: var(--cream); }
-.f-dod { --g: var(--dod); --line: var(--cream); --ink: var(--cream); --sign: min(140px, 10.4vw); }
+.f-dod { --g: var(--dod); --ink: var(--cream); --sign: min(140px, 10.4vw); }
 .f-dod .chroma { --c-fill: var(--red); --c-primary: var(--cream); --c-inline: var(--mus); }
-.members__body { padding: 80px 0 104px; align-items: center; }
+.members__body { padding: 40px 0 89px; align-items: center; }
 .mcard-wrap { grid-column: 1 / 7; display: grid; place-items: center; padding: 20px 0; }
-.mcard { position: relative; width: min(560px, 100%); aspect-ratio: 1.586; background: var(--cream); color: var(--comal); transform: rotate(-4deg); overflow: hidden; }
-.mcard::after { content: ""; position: absolute; inset: 10px; border: 2px solid var(--comal); pointer-events: none; }
-.mcard__stripe { height: 64px; background: var(--red); }
-.mcard__body { padding: 22px 40px 0; }
-.mcard .logo { width: 290px; margin: -21px 0 -42px -4px; --logo-fill: var(--mus); --logo-line: var(--comal); }
-.mcard__title { font: 900 64px/1 var(--sutro); letter-spacing: -0.01em; margin-top: 16px; }
-.mcard__perk { font: italic 700 23px/1.2 var(--sutro); color: var(--red); margin-top: 8px; }
-.mcard__spots { font: 600 14px/1.3 var(--sans-cond); margin-top: 12px; }
-.dia { position: absolute; width: 14px; height: 14px; background: var(--red); border: 2px solid var(--comal); transform: rotate(45deg); z-index: 1; }
-.dia--tl { top: 4px; left: 4px; } .dia--tr { top: 4px; right: 4px; }
-.dia--bl { bottom: 4px; left: 4px; } .dia--br { bottom: 4px; right: 4px; }
+/* The card scales as one picture: every size is in --u, 1/560 of the card's width (the Figma card is 560 x 353) */
+.mcard { --u: calc(100cqw / 560); container-type: inline-size; position: relative; width: min(560px, 100%); aspect-ratio: 560 / 353; background: var(--cream); color: var(--comal); transform: rotate(-4deg); overflow: hidden; }
+.mcard::after { content: ""; position: absolute; inset: calc(10 * var(--u)); border: max(1px, calc(2 * var(--u))) solid var(--comal); pointer-events: none; }
+.mcard__stripe { height: calc(64 * var(--u)); background: var(--red); }
+.mcard__body { padding: calc(14 * var(--u)) calc(40 * var(--u)) 0; }
+/* v2: the logo nearly fills the card */
+.mcard .logo { width: calc(506 * var(--u)); margin: calc(-36 * var(--u)) 0 calc(-24 * var(--u)) calc(-4 * var(--u)); --logo-fill: var(--mus); --logo-line: var(--comal); }
+.mcard__title { font: 900 calc(50 * var(--u))/1 var(--sutro); letter-spacing: -0.01em; }
+.mcard__perk { font: italic 700 calc(23 * var(--u))/1.2 var(--sutro); color: var(--red); margin-top: calc(4 * var(--u)); }
+.mcard__spots { font: 600 calc(14 * var(--u))/1.3 var(--sans-cond); margin-top: calc(4 * var(--u)); }
+/* TACOS rubber stamp, 90px at (445, 236): up and in from the Figma spot (459, 262) so it sits inside the frame */
+.mcard__stamp { position: absolute; left: calc(445 * var(--u)); top: calc(236 * var(--u)); width: calc(90 * var(--u)); height: auto; z-index: 1; }
+.dia { position: absolute; width: calc(14 * var(--u)); height: calc(14 * var(--u)); background: var(--red); border: max(1px, calc(2 * var(--u))) solid var(--comal); transform: rotate(45deg); z-index: 1; }
+.dia--tl { top: calc(4 * var(--u)); left: calc(4 * var(--u)); } .dia--tr { top: calc(4 * var(--u)); right: calc(4 * var(--u)); }
+.dia--bl { bottom: calc(4 * var(--u)); left: calc(4 * var(--u)); } .dia--br { bottom: calc(4 * var(--u)); right: calc(4 * var(--u)); }
 .dia--tl, .dia--tr { background: var(--mus); }
-.mboard { grid-column: 7 / 13; background: var(--comal); color: var(--cream); box-shadow: inset 0 0 0 12px var(--comal), inset 0 0 0 13px rgba(255, 244, 220, .55); padding: 48px 52px 46px; }
+.mboard { grid-column: 7 / 13; background: var(--comal); color: var(--cream); padding: 12px; }
+.mboard__in { border: 1px solid var(--cream-line); padding: 36px 40px 34px; }
 .mboard h3 { font: 800 34px/1.05 var(--sutro); letter-spacing: -0.005em; }
-.mboard h3 + p { font: 400 18px/1.5 var(--serif); margin-top: 10px; color: rgba(255, 244, 220, .88); }
+.mboard h3 + p { font: 700 18px/1.5 var(--serif); margin-top: 10px; color: var(--cream-muted); }
 .tier { margin-top: 34px; }
 .tier__line { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 .tier__name { font: 700 44px/1 var(--sutro); }
 .tier .price { font: 600 24px/1.2 var(--sans-cond); color: var(--mus); }
-.tier p { font: 400 17px/1.5 var(--serif); color: rgba(255, 244, 220, .88); margin-top: 10px; max-width: 46ch; }
+.tier p { font: 700 17px/1.5 var(--serif); color: var(--cream-muted); margin-top: 10px; max-width: 46ch; }
 .tier .btn { margin-top: 18px; }
-.tier + .tier { padding-top: 32px; border-top: 1px solid rgba(255, 244, 220, .2); }
+.tier + .tier { padding-top: 32px; border-top: 1px solid var(--cream-rule); }
 
 /* ---------- 7. Explore L.A. ---------- */
-.f-red { --g: var(--red); --line: var(--cream); --ink: var(--cream); --sign: min(120px, 8.3vw); }
+.f-red { --g: var(--red); --ink: var(--cream); --sign: min(120px, 8.3vw); }
 .f-red .chroma { --c-fill: var(--mus); --c-primary: var(--comal); --c-inline: var(--cream); }
-.lowrider { position: relative; }
+.f-red .fascia__in { min-height: 0; }
+.lowrider { position: relative; z-index: 1; }
 .lowrider > img { width: 100%; height: 700px; object-fit: cover; object-position: 50% 78%; }
-.lowrider .wrap { position: absolute; inset: auto 0 56px; display: flex; justify-content: flex-end; }
-.lowrider__sign { width: calc(var(--col) * 5 + 96px); background: var(--cream); padding: 32px 40px 36px; }
+/* v2: a comal sign that hangs 477px down and runs past the photo's bottom edge */
+.lowrider .wrap { position: absolute; inset: 477px 0 auto; display: flex; justify-content: flex-end; }
+.lowrider__sign { width: calc(var(--col) * 6 + 104px); background: var(--comal); color: var(--cream); padding: 32px 40px 36px; }
+.lowrider__sign .kicker { margin-bottom: 12px; }
 .lowrider__sign .hed { font-size: 52px; line-height: 1; }
-.lowrider__sign .dek { margin-top: 14px; }
+.lowrider__sign .dek { margin-top: 12px; }
 .lowrider__sign .by { margin-top: 12px; }
-.explore { padding: 88px 0 128px; }
+.explore { padding: 112px 0 128px; }
 .explore .story { grid-column: span 4; }
-.explore .window { --bw: 4px; --h: 280px; }
-.explore .story:nth-child(1) .window { --sc: var(--red); }
-.explore .story:nth-child(2) .window { --sc: var(--mus); }
-.explore .story:nth-child(3) .window { --sc: var(--dod); }
-.explore .story:nth-child(1) img { object-position: 50% 30%; }
-.explore .kicker { margin-top: 24px; margin-bottom: 8px; }
-.explore .hed { font-size: 27px; }
-.explore .by { margin-top: 10px; }
 
 /* ---------- 8. Footer ---------- */
-.foot { --g: var(--comal); --line: var(--cream); color: var(--cream); }
+.foot { --g: var(--comal); color: var(--cream); }
 .foot__in { padding: 88px 0 56px; }
 .foot__top { align-items: start; }
 .foot__mark { grid-column: 1 / 4; }
 .stacked { display: block; width: 260px; aspect-ratio: 1200 / 799; background: var(--cream); -webkit-mask: url(img/logo-stacked.png) center / contain no-repeat; mask: url(img/logo-stacked.png) center / contain no-repeat; }
-.foot__mark p { font: italic 500 18px/1.3 var(--sutro); margin-top: 22px; max-width: 240px; }
+.foot__mark p { font: italic 700 18px/1.3 var(--sutro); margin-top: 22px; max-width: 240px; }
 .foot__cols { grid-column: 4 / 8; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.foot__cols h3, .foot__news h3 { font: 700 20px/1.2 var(--sutro); color: var(--mus); margin-bottom: 14px; }
-.foot__cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font: 500 15px/1.3 var(--sans); }
+.foot__cols h3, .foot__news h3 { font: 700 20px/1.2 var(--sutro); color: var(--mus); margin-bottom: 9px; }
+.foot__news h3 { margin-bottom: 12px; }
+.foot__cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font: 700 15px/1.3 var(--sans); }
 .foot__cols a:hover, .foot__mag a:hover { color: var(--mus); text-decoration: underline; text-underline-offset: 4px; }
 .foot__news { grid-column: 8 / 13; }
 .foot__mag { display: flex; gap: 20px; align-items: center; margin-bottom: 36px; }
 .foot__mag img { width: 104px; height: 104px; object-fit: cover; }
 .foot__mag b { display: block; font: 800 24px/1.1 var(--sutro); }
-.foot__mag span { display: block; font: 400 15px/1.45 var(--serif); color: rgba(255, 244, 220, .85); margin-top: 4px; }
-.foot__mag a { display: inline-block; margin-top: 8px; font: 600 14px/1 var(--sans); text-decoration: underline; text-underline-offset: 4px; }
-.nl label { display: block; font: 400 15px/1.45 var(--serif); color: rgba(255, 244, 220, .85); margin-bottom: 12px; }
+.foot__mag span { display: block; font: 700 15px/1.45 var(--serif); color: var(--cream-muted); margin-top: 4px; }
+.foot__mag a { display: inline-block; margin-top: 8px; font: 600 14px/1 var(--sans); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.nl label { display: block; font: 700 15px/1.45 var(--serif); color: var(--cream-muted); margin-bottom: 12px; }
 .nl__row { display: flex; }
-.nl input { flex: 1; min-width: 0; font: 500 16px/1 var(--sans); padding: 14px 16px; border: 2px solid var(--cream); background: var(--comal); color: var(--cream); border-radius: 0; }
-.nl input::placeholder { color: rgba(255, 244, 220, .6); }
+.nl input { flex: 1; min-width: 0; font: 700 16px/1 var(--sans); padding: 14px 16px; border: 2px solid var(--cream); background: var(--comal); color: var(--cream); border-radius: 0; }
+.nl input::placeholder { color: var(--cream-muted); }
 .nl button { font: 600 15px/1 var(--sans); padding: 0 22px; background: var(--mus); color: var(--comal); border: 2px solid var(--cream); border-left: 0; cursor: pointer; border-radius: 0; }
 .nl button:hover { background: var(--cream); }
-.foot__base { margin-top: 72px; padding-top: 22px; border-top: 1px solid rgba(255, 244, 220, .25); display: flex; justify-content: space-between; font: 500 13px/1.4 var(--sans); color: rgba(255, 244, 220, .75); }
+.foot__base { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--cream-rule); display: flex; justify-content: space-between; font: 700 13px/1.4 var(--sans); color: var(--cream-muted); }
 
 /* ---------- Narrow fallback ---------- */
 @media (max-width: 1200px) {
   .hero__sign .hed { font-size: 46px; }
+  .board__head { font-size: 7vw; }
 }
 @media (max-width: 900px) {
   .wrap { width: calc(100% - 40px); }
@@ -255,23 +255,18 @@ h1, h2, h3, p { margin: 0; }
   .join-card { justify-self: center; }
   .navstrip .wrap { height: auto; flex-wrap: wrap; gap: 12px; padding: 14px 0; }
   .navstrip ul { gap: 18px; flex-wrap: wrap; }
-  .hero { grid-template-rows: auto auto; }
   .hero__img { height: 420px; }
-  .hero__hang { grid-area: 2 / 1 / 3 / 2; margin-top: -80px; }
+  .hero__hang { margin-top: -80px; }
   .hero__sign { width: auto; padding: 26px 24px 28px; }
   .hero__sign .hed { font-size: 38px; }
-  .fascia__in { grid-template-columns: 1fr; grid-template-areas: "sign" "note" "link"; justify-items: center; text-align: center; gap: 12px; padding: 40px 0; }
-  .fascia__note, .fascia__link { justify-self: center; text-align: center; max-width: none; }
+  .fascia__in { min-height: 0; padding: 40px 0; text-align: center; }
+  .fascia__link--end { align-self: center; }
   .f-mus { --sign: 17vw; } .f-nop { --sign: 14.5vw; } .f-dod { --sign: 10.6vw; } .f-red { --sign: 7.9vw; }
   .nb { white-space: normal; }
-  .board { padding: 36px 24px; }
-  .board__head { font-size: 12vw; }
-  .mcard__body { padding: 14px 24px 0; }
-  .mcard .logo { width: 170px; margin: -12px 0 -25px -2px; }
-  .mcard__stripe { height: 36px; }
-  .mcard__title { font-size: 38px; margin-top: 8px; }
-  .mcard__perk { font-size: 16px; }
-  .mcard__spots { display: none; }
+  .stories { padding-top: 48px; }
+  .board__in { padding: 36px 24px; }
+  .board__head { font-size: 9.5vw; text-align: center; }
+  .board__head .chroma { white-space: normal; }
   .tier__name { font-size: 34px; }
   .lowrider__sign .hed { font-size: 38px; }
   .mlead { grid-template-columns: 1fr; gap: 20px; }
@@ -284,14 +279,14 @@ h1, h2, h3, p { margin: 0; }
   .feature .window { --h: 320px; }
   .feature__tag { margin: -40px 12px 0; }
   .feature__tag .hed { font-size: 32px; }
-  .row3 { margin-top: 48px; }
   .gcard { margin-top: 40px; }
   .star { right: -8px; width: 130px; height: 130px; }
   .star__in b { font-size: 58px; }
-  .mboard { padding: 32px 24px; margin-right: 12px; }
+  .mboard__in { padding: 32px 24px; }
   .lowrider > img { height: 460px; }
   .lowrider .wrap { position: static; margin-top: -60px; }
   .lowrider__sign { width: auto; }
+  .explore { padding-top: 64px; }
   .foot__cols { grid-template-columns: 1fr 1fr; }
   .foot__base { flex-direction: column; gap: 6px; }
 }
@@ -303,7 +298,7 @@ h1, h2, h3, p { margin: 0; }
   <div class="wrap masthead__in">
     <p class="masthead__tag"><span>Independent.</span> <span>Member supported.</span> <span>Los Angeles.</span></p>
     <a class="logo" href="#" aria-label="L.A. TACO home"></a>
-    <a class="join-card" href="#"><b>Join L.A. TACO</b><small>from $4.92 a month</small></a>
+    <a class="join-card" href="#">Join L.A. TACO</a>
   </div>
 </header>
 <nav class="navstrip" aria-label="Main">
@@ -315,6 +310,7 @@ h1, h2, h3, p { margin: 0; }
       <li><a href="#">Shop</a></li>
     </ul>
     <div class="navstrip__util">
+      <a class="search" href="#" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></a>
       <a href="#">Member log in</a>
       <time datetime="2026-10-10">Saturday, October 10</time>
     </div>
@@ -338,44 +334,59 @@ h1, h2, h3, p { margin: 0; }
   </div>
 </section>
 
+<!-- 2b. Story row under the hero (new in v2) -->
+<section class="stories" aria-label="More top stories">
+  <div class="wrap grid">
+    <article class="story"><a href="#">
+      <figure class="window"><img src="img/182414.jpg" alt="Three men in cowboy hats pose together inside a club."></figure>
+      <span class="kicker">Photo essay</span>
+      <h2 class="hed">East Hollywood Gay Club Famous for Its “Vaquero Nights” Turns 35</h2>
+      <p class="by">By Sean Maung and Julianne Le</p>
+    </a></article>
+    <article class="story"><a href="#">
+      <figure class="window"><img src="img/182003.jpg" alt="Three women skaters hold their boards under palm trees and a blue sky."></figure>
+      <span class="kicker">Culture</span>
+      <h2 class="hed">The Unlikely Sisterhood of Women Skaters in Santa Monica</h2>
+      <p class="by">By Julianne Le</p>
+    </a></article>
+    <article class="story"><a href="#">
+      <figure class="window"><img src="img/181851.jpg" alt="Dancers in feathered regalia line up on a field at a powwow."></figure>
+      <span class="kicker">Culture</span>
+      <h2 class="hed">The First Native Powwow Comes to Cal State LA After 79 Years</h2>
+      <p class="by">By Shylah Featherstone</p>
+    </a></article>
+    <a class="stories__all" href="#">View all</a>
+  </div>
+</section>
+
 <!-- 3. Latest: menu board -->
 <section class="latest" aria-labelledby="latest-h">
   <div class="wrap">
     <div class="board">
-      <h2 class="board__head" id="latest-h">
-        <span class="chroma chroma--deluxe" data-text="LATEST"><span>LATEST</span></span>
-        <span class="board__sub">Today’s news, served hot.</span>
-      </h2>
-      <article class="mlead">
-        <a href="#"><img class="mlead__pic" src="img/183785.jpg" alt="A news helicopter pilot sits in the open door of a yellow helicopter"></a>
-        <a href="#">
-          <span class="mkick">Opinion</span>
-          <h3 class="mlead__hed">I Was an Airborne Cameraman for Decades. This Is Why We Need to Retire News Choppers</h3>
-          <p class="mlead__dek">We are mourning the losses from NBC4 and Telemundo 52’s recent helicopter crash, yet not asking the question: is the benefit of in-air reporting worth the risk?</p>
-          <span class="mmeta"><b>Scott Shulman</b><time>2h ago</time></span>
-        </a>
-      </article>
-      <ul class="mrows">
-        <li><a href="#">
-          <img src="img/183737.jpg" alt="Federal agents pin a man to the ground during an arrest">
-          <span><span class="mkick">ICE Watch</span><span class="mhed">Data Shows City of L.A. as Extreme Hotspot for ICE Arrests</span><span class="mmeta"><b>Memo Torres</b><time>4h ago</time></span></span>
-        </a></li>
-        <li><a href="#">
-          <img src="img/183746.jpg" alt="The border fence cutting through hills above Tijuana">
-          <span><span class="mkick">News</span><span class="mhed">The U.S. Government Quietly Just Made It Legal to Go Through Your Phone at the Border</span><span class="mmeta"><b>Izzy Ramirez</b><time>6h ago</time></span></span>
-        </a></li>
-        <li><a href="#">
-          <img src="img/183598.jpg" alt="Illustrated portraits of Karen Bass and Nithya Raman">
-          <span><span class="mkick">Politics</span><span class="mhed">The No-BS Guide to What Karen Bass and Nithya Raman Plan to Do If They’re Elected</span><span class="mmeta"><b>Sam Ribakoff</b><time>8h ago</time></span></span>
-        </a></li>
-        <li><a href="#">
-          <img src="img/183710.jpg" alt="The Long Beach Convention Center sign and fountain">
-          <span><span class="mkick">Opinion</span><span class="mhed">Long Beach’s ‘Vibe City’ Rebrand Is a Slap in the Face to Locals Living in Poverty</span><span class="mmeta"><b>Myriam Gurba</b><time>Yesterday</time></span></span>
-        </a></li>
-      </ul>
-      <div class="board__foot">
-        <p>Fresh all day. Reported by people who live here.</p>
-        <a class="btn" href="#">All the news</a>
+      <div class="board__in">
+        <h2 class="board__head" id="latest-h">
+          <span class="chroma chroma--deluxe" data-text="TACO MADNESS"><span>TACO MADNESS</span></span>
+          <span class="board__sub">Final round voting is now open!</span>
+        </h2>
+        <article class="mlead">
+          <a href="#"><img class="mlead__pic" src="img/183752.jpg" alt="Two plates of mana’eesh flatbread with salad, held up at a street stall."></a>
+          <a href="#">
+            <span class="mkick">Opinion</span>
+            <h3 class="mlead__hed">I Was an Airborne Cameraman for Decades. This Is Why We Need to Retire News Choppers</h3>
+            <p class="mlead__dek">We are mourning the losses from NBC4 and Telemundo 52’s recent helicopter crash, yet not asking the question: is the benefit of in-air reporting worth the risk?</p>
+            <span class="mmeta"><b>Scott Shulman</b><time>2h ago</time></span>
+          </a>
+        </article>
+        <ul class="mrows">
+          <li><a href="#">
+            <img src="img/183737.jpg" alt="Federal agents pin a man to the ground during an arrest">
+            <span><span class="mkick">ICE Watch</span><span class="mhed">Data Shows City of L.A. as Extreme Hotspot for ICE Arrests</span><span class="mmeta"><b>Memo Torres</b><time>4h ago</time></span></span>
+          </a></li>
+          <li><a href="#">
+            <img src="img/183746.jpg" alt="The border fence cutting through hills above Tijuana">
+            <span><span class="mkick">News</span><span class="mhed">The U.S. Government Quietly Just Made It Legal to Go Through Your Phone at the Border</span><span class="mmeta"><b>Izzy Ramirez</b><time>6h ago</time></span></span>
+          </a></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -385,7 +396,6 @@ h1, h2, h3, p { margin: 0; }
 <section aria-labelledby="tacos-h">
   <div class="fascia f-mus pin">
     <div class="wrap fascia__in">
-      <p class="fascia__note">Where to eat, and who’s cooking it.</p>
       <h2 id="tacos-h"><span class="chroma chroma--deluxe" data-text="TACOS"><span>TACOS</span></span></h2>
       <a class="fascia__link" href="#">More food &amp; tacos</a>
     </div>
@@ -405,13 +415,13 @@ h1, h2, h3, p { margin: 0; }
       </article>
       <div class="side">
         <article class="story"><a href="#">
-          <figure class="window"><img src="img/183203.jpg" alt="Three family members in white shirts stand in front of their taquería’s painted menu sign." style="object-position:50% 35%"></figure>
+          <figure class="window"><img src="img/183203.jpg" alt="Three family members in white shirts stand in front of their taquería’s painted menu sign."></figure>
           <span class="kicker">Tacos</span>
           <h3 class="hed">They Had Degrees, Careers and Dreams. Then They Came Home to Grow the Family Taquería</h3>
           <p class="by">By Karina Soriano</p>
         </a></article>
         <article class="story"><a href="#">
-          <figure class="window"><img src="img/181136.jpg" alt="The green neon sign of Cactus Taquería #1 in Hollywood at night." style="object-position:40% 12%"></figure>
+          <figure class="window"><img src="img/181136.jpg" alt="The green neon sign of Cactus Taquería #1 in Hollywood at night."></figure>
           <span class="kicker">Tacos</span>
           <h3 class="hed">After 34 Years, Hollywood’s Iconic Cactus Taquería #1 Is Being Forced to Close This Sunday</h3>
           <p class="by">By Jake Hook</p>
@@ -445,7 +455,6 @@ h1, h2, h3, p { margin: 0; }
 <section class="guides" aria-labelledby="guides-h">
   <div class="fascia f-nop pin">
     <div class="wrap fascia__in">
-      <p class="fascia__note">Ranked lists. Argue with us.</p>
       <h2 id="guides-h"><span class="chroma chroma--deluxe" data-text="GUIDES"><span>GUIDES</span></span></h2>
       <a class="fascia__link" href="#">All L.A. TACO guides</a>
     </div>
@@ -492,9 +501,7 @@ h1, h2, h3, p { margin: 0; }
 <section class="members" aria-labelledby="members-h">
   <div class="fascia f-dod pin">
     <div class="wrap fascia__in">
-      <p class="fascia__note">Readers pay for this. Join them.</p>
       <h2 id="members-h"><span class="chroma chroma--deluxe" data-text="MEMBERS"><span>MEMBERS</span></span></h2>
-      <a class="fascia__link" href="#">Member log in</a>
     </div>
   </div>
   <div class="wrap grid members__body">
@@ -507,21 +514,24 @@ h1, h2, h3, p { margin: 0; }
           <p class="mcard__perk">Good for free tacos at partner spots</p>
           <p class="mcard__spots">Mariscos Jalisco, Guerrilla Tacos, Carnitas El Momo</p>
         </div>
+        <img class="mcard__stamp" src="img/v2/stamp-tacos.png" alt="">
         <span class="dia dia--tl"></span><span class="dia dia--tr"></span><span class="dia dia--bl"></span><span class="dia dia--br"></span>
       </div>
     </div>
     <div class="mboard">
-      <h3>Two ways in.</h3>
-      <p>Every member gets every story, two members-only newsletters, free entry to Taco Madness, the card, and 20% off merch.</p>
-      <div class="tier">
-        <div class="tier__line"><span class="tier__name">Local</span><span class="price">$59 a year</span></div>
-        <p>The membership that keeps the lights on. Works out to $4.92 a month.</p>
-        <a class="btn" href="#">Join as Local</a>
-      </div>
-      <div class="tier">
-        <div class="tier__line"><span class="tier__name">Loyal</span><span class="price">$99 a year</span></div>
-        <p>Everything in Local, plus a merch pick: a shirt, a hat or a zine. $8.25 a month.</p>
-        <a class="btn" href="#">Join as Loyal</a>
+      <div class="mboard__in">
+        <h3>Two ways in.</h3>
+        <p>Every member gets every story, two members-only newsletters, free entry to Taco Madness, the card, and 20% off merch.</p>
+        <div class="tier">
+          <div class="tier__line"><span class="tier__name">Local</span><span class="price">$59 a year</span></div>
+          <p>The membership that keeps the lights on. Works out to $4.92 a month.</p>
+          <a class="btn" href="#">Join as Local</a>
+        </div>
+        <div class="tier">
+          <div class="tier__line"><span class="tier__name">Loyal</span><span class="price">$99 a year</span></div>
+          <p>Everything in Local, plus a merch pick: a shirt, a hat or a zine. $8.25 a month.</p>
+          <a class="btn" href="#">Join as Loyal</a>
+        </div>
       </div>
     </div>
   </div>
@@ -531,9 +541,8 @@ h1, h2, h3, p { margin: 0; }
 <section aria-labelledby="explore-h">
   <div class="fascia f-red pin">
     <div class="wrap fascia__in">
-      <p class="fascia__note">The city outside the kitchen.</p>
       <h2 id="explore-h"><span class="chroma chroma--deluxe" data-text="EXPLORE L.A."><span>EXPLORE L.A.</span></span></h2>
-      <a class="fascia__link" href="#">More from Explore L.A.</a>
+      <a class="fascia__link fascia__link--end" href="#">More from Explore L.A.</a>
     </div>
   </div>
   <div class="lowrider">

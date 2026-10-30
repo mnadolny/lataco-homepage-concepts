@@ -3,12 +3,9 @@
   if (window.self !== window.top) return; // not inside the index page's previews
   if (location.hostname.endsWith(".github.io")) return; // hidden on the shared client links
   const concepts = [
-    ['index.html', 'All three'],
+    ['index.html', 'Both'],
     ['a.html', 'A  Primera Plana'],
-    ['a-v2.html', 'A v2'],
     ['b.html', 'B  Rótulo'],
-    ['b-v2.html', 'B v2'],
-    ['c.html', 'C  Wheatpaste'],
   ];
   const here = location.pathname.split('/').pop() || 'index.html';
   const nav = document.createElement('nav');

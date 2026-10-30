@@ -3,12 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>L.A. TACO — Primera Plana</title>
+<title>L.A. TACO — Concept A: Primera Plana</title>
 <link rel="stylesheet" href="shared/fonts.css">
+<!-- v2: rebuilt from the Figma revisions (frame 4565:49, "A — Primera Plana · Homepage 1440").
+     The original concept stays in a.html for reference. -->
 <style>
 :root {
   --navy: #16386C;
   --deep: #0C2549;
+  --darkest: #091E3E;
+  --navy-light: #244D84;
+  --mustard: #FFC20E;
+  --side: max(60px, (100% - 1320px) / 2);
   --paper: #F7F4E9;
   --masa: #EFE6CF;
   --gold: #F4C542;
@@ -60,16 +66,19 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .btn:active { transform: translateY(3px); box-shadow: 0 0 0 var(--deep); }
 .btn--navy { background: var(--navy); color: var(--paper); }
 
-/* chromatic section wordmarks (live type) */
-.chroma.chroma--shaded { --c-fill: var(--gold); --c-primary: var(--navy); }
+/* section wordmarks: outlined wood-type art (img/v2), replacing the live Sutro Shaded type */
 .section-head {
   display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
   border-bottom: 3px solid var(--navy); margin-bottom: 40px;
 }
-.wordmark { margin: 0; font-size: 140px; line-height: 1; font-weight: 400; }
-.wordmark .chroma { display: block; margin-bottom: -.12em; }
+.wordmark { margin: 0; line-height: 0; }
+.wordmark img { height: 150px; width: auto; }
+/* NEIGHBORHOODS art carries extra transparent margin; crop it to a 132px band like the Figma frame */
+.wordmark--crop { height: 132px; overflow: hidden; }
+.wordmark--crop img { height: 259px; margin: -76px 0 0 -6px; max-width: none; }
 .section-head .textlink { margin-bottom: 18px; white-space: nowrap; }
-.wordmark--long { font-size: 128px; }
+/* guide counts still use the live chromatic layers */
+.chroma.chroma--shaded { --c-fill: var(--gold); --c-primary: var(--mustard); }
 
 /* ---------- header ---------- */
 .site-header { background: var(--navy); color: var(--paper); }
@@ -82,23 +91,27 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .util { display: flex; align-items: center; gap: 24px; flex: none; }
 .util .login { font: 500 14px/1 var(--sans); color: var(--paper); }
 .util .login:hover { text-decoration: underline; text-underline-offset: 4px; }
+.search { display: grid; place-items: center; width: 40px; height: 40px; margin: 0 -8px; color: var(--paper); }
+.search:hover { color: var(--gold); }
+.search svg { width: 22px; height: 22px; }
 .edition { background: var(--masa); border-bottom: 1px solid var(--rule); }
 .edition .wrap { display: flex; justify-content: space-between; align-items: center; height: 38px; font: 500 13px/1 var(--sans); color: var(--ink); }
 
 /* ---------- hero ---------- */
-.hero__photo { margin: 0; height: clamp(680px, 78vh, 860px); overflow: hidden; background: var(--deep); }
+/* v2: photo bleeds off the left edge only and stops mid-way across the Latest rail */
+.hero__photo { margin: 0; height: 654px; width: calc(100% - var(--side) - 156px); overflow: hidden; background: var(--deep); }
 .hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 26%; transform-origin: 62% 40%; }
 .hero__grid { position: relative; margin-top: -240px; align-items: start; grid-template-rows: auto auto 1fr; }
 .slab { background: var(--paper); position: relative; }
 .slab--top { grid-column: 1 / 10; grid-row: 1; padding: 44px 0 0 48px; }
 .slab--bottom { grid-column: 1 / 10; grid-row: 2; padding: 0 0 0 48px; }
 .seconds { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gut); margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--rule); }
-.seconds .hed { font-size: 28px; line-height: 1.08; margin-bottom: 10px; }
-.seconds .dek { font-size: 18px; line-height: 1.45; margin-bottom: 12px; }
-.slab h1 { font: 900 72px/1 var(--sutro); letter-spacing: -0.01em; margin: 0 0 30px; color: var(--ink); }
+.seconds .card .hed { font-size: 28px; line-height: 1.1; margin-bottom: 10px; }
+.seconds .card .dek { font-size: 18px; line-height: 1.45; margin-bottom: 10px; }
+.slab h1 { font: 500 72px/1 var(--sutro); letter-spacing: -0.01em; margin: 0 0 30px; color: var(--ink); }
 .slab h1 a:hover { text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 8px; }
-.slab .kicker { margin-bottom: 18px; }
-.slab .dek { font-size: 22px; max-width: 30em; margin-bottom: 18px; }
+.slab > .kicker { margin-bottom: 18px; }
+.slab > .dek { font-size: 22px; max-width: 30em; margin-bottom: 18px; }
 .latest { grid-column: 10 / 13; grid-row: 2 / span 2; }
 .latest h2 { font: italic 700 28px/1 var(--sutro); margin: 0; padding-bottom: 12px; border-bottom: 3px solid var(--navy); color: var(--ink); }
 .latest ol { list-style: none; margin: 0; padding: 0; }
@@ -131,12 +144,12 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .navy { background: var(--navy); color: var(--paper); }
 .member { position: relative; overflow: hidden; min-height: 640px; margin-top: 128px; }
 .member .palm {
-  /* fronds bleed off the top; the painted L.A. TACO sign stays whole */
-  position: absolute; left: calc(50% - 706px); top: -52px; height: 690px; width: auto;
+  /* v2: the whole palm sits inside the band */
+  position: absolute; left: calc(50% - 705px); top: -12px; height: 690px; width: auto;
   pointer-events: none; user-select: none;
 }
 .member .wrap { position: relative; }
-.member__copy { grid-column: 5 / 13; padding: 68px 0 76px; }
+.member__copy { grid-column: 5 / 13; padding: 68px 0 40px; }
 .member h2 { font: 900 72px/0.98 var(--sutro); letter-spacing: -0.01em; color: var(--paper); margin: 0 0 18px; }
 .member__lede { font: 400 21px/1.45 var(--serif); margin: 0 0 32px; max-width: none; color: #E9E3D0; }
 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gut); }
@@ -163,6 +176,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .guide img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 .guide .count { display: block; position: relative; font-size: 150px; line-height: 1; margin: -78px 0 0 -6px; }
 .guide .count .chroma { display: block; }
+.guide .count .chroma > span { text-shadow: 0 3px 0 var(--deep); }
 .guide .hed { font-size: 26px; line-height: 1.1; margin: 4px 0 10px; }
 
 /* ---------- feature ---------- */
@@ -170,11 +184,12 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .feature__photo { height: 720px; overflow: hidden; }
 .feature__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 88%; }
 .feature .grid { position: relative; margin-top: -200px; }
-.feature .slab { grid-column: 7 / 13; padding: 44px 0 0 48px; }
-.feature h2 { font: 900 80px/0.98 var(--sutro); letter-spacing: -0.012em; margin: 0 0 22px; color: var(--ink); }
-.feature .dek { margin-bottom: 16px; }
+.feature .slab { grid-column: 7 / 13; padding: 44px 60px 0 48px; }
+.feature h2 { font: 500 72px/1 var(--sutro); letter-spacing: -0.01em; margin: 0 0 22px; color: var(--ink); }
+.feature .slab > .dek { font-size: 21px; margin-bottom: 16px; }
 
-/* ---------- explore ---------- */
+/* ---------- explore (now "Neighborhoods") ---------- */
+.section--tight { padding-top: 72px; }
 .explore { grid-template-rows: auto; }
 .ex-big { grid-column: 1 / 8; }
 .ex-big .big__img { height: 840px; }
@@ -216,17 +231,18 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
 /* ---------- footer ---------- */
 .site-footer { background: var(--navy); color: var(--paper); padding: 96px 0 40px; overflow: clip; }
-.site-footer .logo { width: 106.95%; --logo-fill: var(--gold); --logo-line: #000; margin: -7.75% 0 -15.4%; }
-.foot { margin-top: 72px; padding-top: 40px; border-top: 1px solid rgba(247,244,233,.25); }
+/* v2: logo fills the 1320 grid with a darkest-navy outline instead of black */
+.site-footer .logo { width: 100%; --logo-fill: var(--gold); --logo-line: var(--darkest); margin: -7.2% 0 -13.6%; }
+.foot { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--navy-light); }
 .foot__tag { grid-column: 1 / 5; font: italic 700 30px/1.1 var(--sutro); color: var(--paper); margin: 0; }
 .foot nav { grid-column: span 2; }
 .foot nav:first-of-type { grid-column: 5 / 7; }
-.foot h3 { font: 600 13px/1 var(--sans); color: var(--gold); margin: 0 0 16px; }
+.foot h3 { font: 600 13px/1 var(--sans); color: var(--gold); margin: 0; }
 .foot ul { list-style: none; margin: 0; padding: 0; }
-.foot li { margin-bottom: 10px; }
+.foot li { margin-top: 10px; line-height: 1.3; }
 .foot nav a { font: 400 15px/1.3 var(--sans); color: var(--paper); }
 .foot nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.fine { margin-top: 56px; display: flex; justify-content: space-between; font: 400 13px/1.4 var(--sans); color: rgba(247,244,233,.75); }
+.fine { margin-top: 56px; display: flex; justify-content: space-between; font: 400 13px/1.4 var(--sans); color: #99A5B3; }
 
 /* ---------- the one moment ---------- */
 @media (prefers-reduced-motion: no-preference) {
@@ -239,10 +255,8 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 /* ---------- 1280-ish ---------- */
 @media (max-width: 1360px) {
   .slab h1 { font-size: 64px; }
-  .wordmark { font-size: 124px; }
-  .wordmark--long { font-size: 112px; }
   .member h2 { font-size: 62px; }
-  .feature h2 { font-size: 70px; }
+  .feature h2 { font-size: 64px; }
 }
 
 /* ---------- stacked fallback ---------- */
@@ -256,17 +270,18 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   .util { margin-left: auto; }
   .util .login { display: none; }
   .edition .wrap span:first-child { display: none; }
-  .hero__photo { height: 62vw; min-height: 300px; }
+  .hero__photo { width: 100%; height: 62vw; min-height: 300px; }
   .hero__grid { margin-top: -60px; }
   .slab, .feature .slab { padding: 20px 20px 0; margin: 0 -20px; }
   .slab h1 { font-size: 38px; }
   .seconds { grid-template-columns: 1fr; }
   .feature h2 { font-size: 42px; }
   .latest { margin-top: 40px; }
-  .wordmark { font-size: 64px; }
-  .wordmark--long { font-size: 34px; }
+  .wordmark img { height: 80px; }
+  .wordmark--crop { height: auto; overflow: visible; }
+  .wordmark--crop img { width: 100%; height: auto; margin: -9% 0 -8%; }
   .section-head { flex-wrap: wrap; }
-  .section { padding-top: 72px; }
+  .section, .section--tight { padding-top: 72px; }
   .big__img, .ex-big .big__img { height: 64vw; }
   .tab { width: auto; margin: -40px 0 0 0 !important; padding: 16px 16px 0 0 !important; }
   .big .hed, .ex-big .hed { font-size: 30px; }
@@ -305,6 +320,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
       </ul>
     </nav>
     <div class="util">
+      <a class="search" href="#" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></a>
       <a class="login" href="#">Member log in</a>
       <a class="btn" href="#">Join L.A. TACO</a>
     </div>
@@ -377,7 +393,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <!-- 3. FOOD & TACOS -->
   <section class="section wrap" aria-labelledby="tacos-h">
     <div class="section-head">
-      <h2 class="wordmark" id="tacos-h" aria-label="Tacos"><span class="chroma chroma--shaded" data-text="TACOS" aria-hidden="true"><span>TACOS</span></span></h2>
+      <h2 class="wordmark" id="tacos-h"><img src="img/v2/wordmark-tacos.png" alt="Tacos"></h2>
       <a class="textlink" href="#">More food &amp; tacos</a>
     </div>
 
@@ -472,7 +488,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <!-- 5. GUIDES -->
   <section class="section wrap" aria-labelledby="guides-h">
     <div class="section-head">
-      <h2 class="wordmark" id="guides-h" aria-label="Guides"><span class="chroma chroma--shaded" data-text="GUIDES" aria-hidden="true"><span>GUIDES</span></span></h2>
+      <h2 class="wordmark" id="guides-h"><img src="img/v2/wordmark-guides.png" alt="Guides"></h2>
       <a class="textlink" href="#">All guides</a>
     </div>
     <div class="guides">
@@ -509,17 +525,17 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     <div class="wrap grid">
       <article class="slab">
         <a class="kicker" href="#">Photo essay</a>
-        <h2 id="feature-h"><a href="#">This is how<br> L.A.<br> celebrates.</a></h2>
+        <h2 id="feature-h"><a href="#">This is how L.A.<br> celebrates.</a></h2>
         <p class="dek">Mexican Independence Day, through the lens of L.A.’s lowrider community.</p>
         <p class="byline">Photos by <b>Erwin Recinos</b></p>
       </article>
     </div>
   </section>
 
-  <!-- 7. EXPLORE L.A. -->
-  <section class="section wrap" aria-labelledby="explore-h">
+  <!-- 7. NEIGHBORHOODS (was Explore L.A.) -->
+  <section class="section--tight wrap" aria-labelledby="explore-h">
     <div class="section-head">
-      <h2 class="wordmark wordmark--long" id="explore-h" aria-label="Explore L.A."><span class="chroma chroma--shaded" data-text="EXPLORE L.A." aria-hidden="true"><span>EXPLORE L.A.</span></span></h2>
+      <h2 class="wordmark wordmark--crop" id="explore-h"><img src="img/v2/wordmark-neighborhoods.png" alt="Neighborhoods"></h2>
       <a class="textlink" href="#">More of L.A.</a>
     </div>
     <div class="grid explore">
