@@ -1,6 +1,8 @@
 /* Shared type foundation for the three LA Taco homepage concepts.
-   Sutro + its chromatic layers are Adobe Fonts activated on this Mac (family name has a trailing space).
+   Sutro + its chromatic layers come from the Adobe Fonts web project znx3cep ("sutro", "sutro-shaded-primary", …).
+   Local Adobe activations (family "Sutro " with a trailing space) are listed first so this Mac keeps every weight.
    Source Serif 4 + IBM Plex come from Google Fonts. */
+@import url('https://use.typekit.net/znx3cep.css');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap');
 
 /* Chromatic layers: stack these in the same position, one color each */
@@ -13,7 +15,7 @@
 
 :root {
   /* Sutro weights: 300 Light, 500 Medium, 700 Bold, 800 ExtraBold, 900 Heavy (+ italics) */
-  --sutro: "Sutro ", "Sutro", Georgia, serif;
+  --sutro: "Sutro ", "sutro", Georgia, serif;
   --serif: "Source Serif 4", Georgia, serif;
   --sans: "IBM Plex Sans", system-ui, sans-serif;
   --sans-cond: "IBM Plex Sans Condensed", "IBM Plex Sans", sans-serif;
@@ -25,12 +27,12 @@
 .chroma { position: relative; display: inline-block; line-height: 1; white-space: nowrap; }
 .chroma > span { position: relative; color: var(--c-primary, currentColor); }
 .chroma::before, .chroma::after { content: attr(data-text); position: absolute; inset: 0; pointer-events: none; }
-.chroma--shaded > span { font-family: 'Shaded Primary', var(--sutro); }
-.chroma--shaded::before { font-family: 'Shaded Fill', var(--sutro); color: var(--c-fill, transparent); }
+.chroma--shaded > span { font-family: 'Shaded Primary', 'sutro-shaded-primary', var(--sutro); }
+.chroma--shaded::before { font-family: 'Shaded Fill', 'sutro-shaded-fill', var(--sutro); color: var(--c-fill, transparent); }
 .chroma--shaded::after { display: none; }
-.chroma--deluxe > span { font-family: 'Deluxe Primary', var(--sutro); }
-.chroma--deluxe::before { font-family: 'Deluxe Fill', var(--sutro); color: var(--c-fill, transparent); }
-.chroma--deluxe::after { font-family: 'Deluxe Inline', var(--sutro); color: var(--c-inline, transparent); }
+.chroma--deluxe > span { font-family: 'Deluxe Primary', 'sutro-deluxe-primary', var(--sutro); }
+.chroma--deluxe::before { font-family: 'Deluxe Fill', 'sutro-deluxe-fill', var(--sutro); color: var(--c-fill, transparent); }
+.chroma--deluxe::after { font-family: 'Deluxe Inline', 'sutro-deluxe-inline', var(--sutro); color: var(--c-inline, transparent); }
 
 /* Two-tone logo from masks (img/logo-fill.png + img/logo-line.png, 1200x447) */
 .logo { position: relative; display: block; aspect-ratio: 1200 / 447; }
