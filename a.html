@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>L.A. TACO — Version A</title>
 <link rel="stylesheet" href="shared/fonts.css">
+<!-- guide counts use Rye, the face the Figma frame shows for them -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rye&display=swap">
 <!-- v2: rebuilt from the Figma revisions (frame 4565:49, "A — Primera Plana · Homepage 1440").
      The original concept stays in a.html for reference. -->
 <style>
@@ -77,8 +79,6 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .wordmark--crop { height: 132px; overflow: hidden; }
 .wordmark--crop img { height: 259px; margin: -76px 0 0 -6px; max-width: none; }
 .section-head .textlink { margin-bottom: 18px; white-space: nowrap; }
-/* guide counts still use the live chromatic layers */
-.chroma.chroma--shaded { --c-fill: var(--gold); --c-primary: var(--mustard); }
 
 /* ---------- header ---------- */
 .site-header { background: var(--navy); color: var(--paper); }
@@ -174,9 +174,9 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 /* ---------- guides ---------- */
 .guides { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gut); }
 .guide img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
-.guide .count { display: block; position: relative; font-size: 150px; line-height: 1; margin: -78px 0 0 -6px; }
-.guide .count .chroma { display: block; }
-.guide .count .chroma > span { text-shadow: 0 3px 0 var(--deep); }
+/* one solid layer, as in Figma: mustard with a navy shadow down and to the left */
+.guide .count { display: block; position: relative; font: 400 150px/1 "Rye", var(--sutro); color: var(--mustard); text-shadow: -2px 3px 0 var(--deep); margin: -78px 0 0 -6px; }
+/* shadow the stacked layers as one shape; a text-shadow on the top layer alone draws a second outline over the fill */
 .guide .hed { font-size: 26px; line-height: 1.1; margin: 4px 0 10px; }
 
 /* ---------- feature ---------- */
@@ -494,25 +494,25 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     <div class="guides">
       <article class="guide">
         <a href="#" tabindex="-1"><img src="img/tacos.jpg" alt="Carne asada tacos wrapped in blue-and-white paper on a green tablecloth" style="object-position:38% 50%"></a>
-        <span class="count" aria-hidden="true"><span class="chroma chroma--shaded" data-text="19"><span>19</span></span></span>
+        <span class="count" aria-hidden="true">19</span>
         <h3 class="hed"><a href="#"><span class="sr-only">The 19 </span>Best carne asada tacos in L.A.</a></h3>
         <p class="byline">By <b>Javier Cabral &amp; L.A. TACO Staff</b></p>
       </article>
       <article class="guide">
         <a href="#" tabindex="-1"><img src="img/182778.jpg" alt="Kebab skewers grilling over smoking coals" style="object-position:30% 50%"></a>
-        <span class="count" aria-hidden="true"><span class="chroma chroma--shaded" data-text="21"><span>21</span></span></span>
+        <span class="count" aria-hidden="true">21</span>
         <h3 class="hed"><a href="#"><span class="sr-only">The 21 </span>Best street kebabs in L.A.</a></h3>
         <p class="byline">By <b>L.A. TACO Staff</b></p>
       </article>
       <article class="guide">
         <a href="#" tabindex="-1"><img src="img/173124.jpg" alt="A red record-shop mural on a white storefront" style="object-position:62% 50%"></a>
-        <span class="count" aria-hidden="true"><span class="chroma chroma--shaded" data-text="27"><span>27</span></span></span>
+        <span class="count" aria-hidden="true">27</span>
         <h3 class="hed"><a href="#"><span class="sr-only">The 27 </span>Best record shops in L.A.</a></h3>
         <p class="byline">By <b>Hadley Tomicki</b></p>
       </article>
       <article class="guide">
         <a href="#" tabindex="-1"><img src="img/170528.jpg" alt="A paperback of 1984 half-buried in sand" style="object-position:50% 50%"></a>
-        <span class="count" aria-hidden="true"><span class="chroma chroma--shaded" data-text="29"><span>29</span></span></span>
+        <span class="count" aria-hidden="true">29</span>
         <h3 class="hed"><a href="#"><span class="sr-only">The 29 </span>Best independent bookshops in L.A.</a></h3>
         <p class="byline">By <b>L.A. TACO Staff</b></p>
       </article>
