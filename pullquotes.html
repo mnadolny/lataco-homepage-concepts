@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L.A. TACO — Pull quote explorations</title>
+<link rel="stylesheet" href="shared/fonts.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&display=swap">
+<style>
+:root {
+  --red: #D7261E; --mus: #FFC20E; --nop: #1E7B4A; --dod: #005A9C; --cream: #FFF4DC; --comal: #1B1714;
+  --cream-muted: rgba(255, 244, 220, .78); --cream-line: rgba(255, 244, 220, .55);
+  --ink-muted: rgba(27, 23, 20, .68); --ink-rule: rgba(27, 23, 20, .18);
+  --col: calc((min(1320px, 100vw - 120px) - 264px) / 12);
+  --indent: 40px;
+  --wrap: min(1320px, 100vw - 120px);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: clip; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--cream); color: var(--comal); font: 400 16px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3, p, figure, blockquote { margin: 0; }
+:focus-visible { outline: 3px dashed currentColor; outline-offset: 4px; }
+.wrap { width: var(--wrap); margin-inline: auto; }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Page header ---------- */
+.top { background: var(--comal); color: var(--cream); padding: 56px 0 60px; }
+.top .logo { width: 220px; --logo-fill: var(--mus); --logo-line: var(--cream); margin: -16px 0 -30px -6px; }
+.top h1 { font: 800 64px/1 var(--sutro); letter-spacing: -0.012em; margin-top: 28px; grid-column: 1 / 9; }
+.top__dek { grid-column: 1 / 8; font: 700 20px/1.45 var(--serif); color: var(--cream-muted); margin-top: 18px; }
+.top__why { grid-column: 9 / 13; align-self: end; font: 600 14px/1.5 var(--sans); color: var(--cream-muted); border-top: 2px solid var(--cream-line); padding-top: 14px; }
+.top__why b { display: block; font: italic 700 20px/1.2 var(--sutro); color: var(--mus); margin-bottom: 6px; }
+.jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; grid-column: 1 / -1; }
+.jump a { font: 600 14px/1 var(--sans); text-decoration: none; background: var(--mus); color: var(--comal); padding: 10px 13px; }
+.jump a:hover { background: var(--cream); }
+
+/* ---------- Option header ---------- */
+.opt { padding: 88px 0 32px; border-top: 4px solid var(--comal); }
+.opt + .opt { margin-top: 24px; }
+.opt__head { align-items: end; margin-bottom: 44px; }
+.opt__name { grid-column: 1 / 8; display: flex; align-items: baseline; gap: 18px; }
+.opt__letter { font: 900 72px/.8 var(--sutro); color: var(--red); }
+.opt__name h2 { font: 800 44px/1 var(--sutro); letter-spacing: -0.01em; }
+.opt__what { grid-column: 1 / 8; font: 400 18px/1.5 var(--serif); margin-top: 14px; max-width: 62ch; }
+.opt__use { grid-column: 9 / 13; font: 600 14px/1.45 var(--sans); color: var(--ink-muted); }
+.opt__use b { display: block; font: italic 700 18px/1.2 var(--sutro); color: var(--comal); margin-bottom: 4px; }
+.opt__use + .opt__use { margin-top: 12px; }
+.opt__meta { grid-column: 9 / 13; display: grid; gap: 14px; align-self: end; }
+
+/* ---------- Story fragment (article 1 sizes) ---------- */
+.story { grid-column: 1 / 9; padding-left: var(--indent); min-width: 0; }
+.story > * { max-width: 680px; }
+.story p { font: 400 20px/1.6 var(--serif); margin-bottom: 1.2em; }
+.story p.fade { color: var(--ink-muted); }
+
+/* ---------- Baseline: what article 1 does now ---------- */
+.now { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; grid-column: 1 / 9; }
+.now__sign { background: var(--red); color: var(--cream); padding: 32px 36px 36px; font: 800 34px/1.04 var(--sutro); letter-spacing: -0.01em; }
+.now__rule { border-left: 12px solid var(--mus); padding: 4px 0 6px 24px; font: italic 700 26px/1.22 var(--sutro); align-self: start; }
+.now__notes { grid-column: 9 / 13; font: 600 14px/1.5 var(--sans); color: var(--ink-muted); }
+.now__notes li { margin-bottom: 8px; }
+.now__notes ul { margin: 0; padding-left: 18px; }
+
+/* ---------- A. Hanging quote marks ---------- */
+.hang { position: relative; margin: 40px 0 52px; padding-top: 112px; }
+.hang__mark { position: absolute; left: calc(-1 * var(--indent) - 14px); top: -66px; font-size: 230px; line-height: 1;
+  --c-fill: var(--mus); --c-primary: var(--red); --c-inline: var(--cream); }
+.hang__mark .chroma > span { display: block; }
+.hang blockquote p { font: italic 700 40px/1.16 var(--sutro); letter-spacing: -0.008em; margin: 0; text-wrap: balance; }
+.hang figcaption { margin-top: 18px; font: 600 14px/1.3 var(--sans); color: var(--ink-muted); display: flex; align-items: center; gap: 12px; }
+.hang figcaption::before { content: ""; width: 44px; height: 4px; background: var(--comal); }
+
+/* ---------- B. Rótulo wall (full bleed) ---------- */
+.wall { --off: calc((100vw - var(--wrap)) / 2 + var(--indent)); width: 100vw; max-width: none !important; margin: 56px 0 60px calc(-1 * var(--off));
+  background: var(--dod); color: var(--cream); padding: 64px 0 68px; position: relative; }
+.wall::before { content: ""; position: absolute; inset: 18px; border: 2px solid var(--cream-line); outline: 2px solid var(--cream-line); outline-offset: -10px; pointer-events: none; }
+.wall__in { width: var(--wrap); margin-inline: auto; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: end; }
+.wall__words { grid-column: 1 / 10; }
+.wall__line { display: block; white-space: nowrap; line-height: .98; font-size: 100px;
+  --c-fill: var(--red); --c-primary: var(--cream); --c-inline: var(--mus); }
+.wall__line.is-solid { font: 800 100px/.98 var(--sutro); color: var(--mus); letter-spacing: -0.01em; }
+.wall__line .chroma { display: block; }
+.wall__line .chroma > span { display: block; }
+.wall__by { grid-column: 10 / 13; font: 600 14px/1.45 var(--sans); color: var(--cream-muted); padding-bottom: 10px; }
+.wall__by b { display: block; font: italic 700 22px/1.2 var(--sutro); color: var(--mus); margin-bottom: 6px; }
+
+/* ---------- C. LED storefront sign ---------- */
+.led { margin: 52px 0 56px calc(-1 * var(--indent)); max-width: none !important; }
+.led__box { contain: inline-size; position: relative; background: #0d0b0a; padding: 22px 0; border: 10px solid #2b2622; box-shadow: inset 0 0 0 2px #000, 8px 8px 0 var(--comal); overflow: hidden; }
+.led__box::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle, rgba(255, 80, 50, .13) 1.7px, transparent 2.2px) 0 0 / 7px 7px; }
+.led__glow { filter: drop-shadow(0 0 5px rgba(255, 70, 40, .9)) drop-shadow(0 0 14px rgba(255, 60, 30, .45)); }
+.led__track { display: flex; width: max-content; color: #ff4a2b; font: 700 86px/1 var(--sans-cond); text-transform: uppercase;
+  -webkit-mask: radial-gradient(circle, #000 2.4px, transparent 2.9px) 0 0 / 7px 7px; mask: radial-gradient(circle, #000 2.4px, transparent 2.9px) 0 0 / 7px 7px; }
+.led__track span { padding-right: 120px; white-space: nowrap; }
+.led__track span b { color: var(--mus); font-weight: inherit; }
+.led__cap { display: flex; justify-content: space-between; margin-top: 16px; font: 600 14px/1.3 var(--sans); color: var(--ink-muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .led__track { animation: led 16s linear infinite; }
+  .led:hover .led__track { animation-play-state: paused; }
+}
+@keyframes led { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .led__track { width: auto; flex-wrap: wrap; padding: 0 28px; font-size: 56px; }
+  .led__track span { white-space: normal; padding: 0; }
+  .led__track span[aria-hidden] { display: none; }
+}
+
+/* ---------- D. Slap sticker ---------- */
+.sticker { float: right; width: 360px; margin: 40px -128px 24px 32px; position: relative; transform: rotate(-3deg); max-width: none !important; }
+.sticker__face { background: var(--cream); border: 4px solid var(--comal); border-radius: 22px; padding: 26px 26px 24px;
+  box-shadow: 0 0 0 9px #fff, 9px 12px 0 9px rgba(27, 23, 20, .9); }
+.sticker__face p { font: 800 30px/1.06 var(--sutro); letter-spacing: -0.006em; margin: 0 !important; }
+.sticker__face small { display: block; margin-top: 14px; font: 600 13px/1.3 var(--sans); color: var(--ink-muted); }
+.stamp { position: absolute; right: -34px; top: -66px; width: 106px; height: 106px; transform: rotate(14deg); filter: drop-shadow(4px 4px 0 var(--comal)); }
+.stamp::before, .stamp__in { position: absolute; clip-path: var(--burst); }
+.stamp::before { content: ""; inset: 0; background: var(--comal); }
+.stamp__in { inset: 4px; background: var(--red); color: var(--cream); display: grid; place-content: center; text-align: center; }
+.stamp__in b { font: 900 30px/.86 var(--sutro); letter-spacing: -0.01em; display: block; }
+:root { --burst: polygon(50.0% 0.0%, 58.0% 9.8%, 69.1% 3.8%, 72.8% 15.9%, 85.4% 14.6%, 84.1% 27.2%, 96.2% 30.9%, 90.2% 42.0%, 100.0% 50.0%, 90.2% 58.0%, 96.2% 69.1%, 84.1% 72.8%, 85.4% 85.4%, 72.8% 84.1%, 69.1% 96.2%, 58.0% 90.2%, 50.0% 100.0%, 42.0% 90.2%, 30.9% 96.2%, 27.2% 84.1%, 14.6% 85.4%, 15.9% 72.8%, 3.8% 69.1%, 9.8% 58.0%, 0.0% 50.0%, 9.8% 42.0%, 3.8% 30.9%, 15.9% 27.2%, 14.6% 14.6%, 27.2% 15.9%, 30.9% 3.8%, 42.0% 9.8%); }
+.clear { clear: both; }
+
+/* ---------- E. Marker in the running text ---------- */
+.marked { position: relative; }
+.hl { background: linear-gradient(100deg, transparent .2em, rgba(255, 194, 14, .85) .35em, rgba(255, 194, 14, .95) 60%, rgba(255, 194, 14, .7) calc(100% - .3em), transparent calc(100% - .15em));
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; padding: .06em .3em; margin: 0 -.2em; border-radius: .5em .2em .6em .25em; color: var(--comal); font-weight: 700; }
+.note { position: absolute; left: calc(100% + 64px); top: 52px; width: 260px; max-width: none !important; }
+.note svg { position: absolute; left: -78px; top: 6px; width: 76px; height: 44px; overflow: visible; }
+.note b { display: block; font: italic 700 24px/1.1 var(--sutro); color: var(--red); }
+.note p { font: 600 14px/1.45 var(--sans) !important; color: var(--ink-muted); margin: 8px 0 12px !important; }
+.note a { display: inline-block; font: 600 13px/1 var(--sans); text-decoration: none; padding: 9px 12px; border: 2px solid var(--comal); }
+.note a:hover { background: var(--mus); border-color: var(--mus); }
+
+/* ---------- F. Subtitle on the photo ---------- */
+.sub { margin: 48px 0 52px calc(-1 * var(--indent)); max-width: none !important; position: relative; }
+.sub img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.sub blockquote { position: absolute; left: 8%; right: 8%; bottom: 7%; text-align: center; }
+.sub blockquote p { font: 800 40px/1.12 var(--sutro); color: var(--mus); margin: 0; text-wrap: balance;
+  text-shadow: 3px 0 0 var(--comal), -3px 0 0 var(--comal), 0 3px 0 var(--comal), 0 -3px 0 var(--comal), 2px 2px 0 var(--comal), -2px -2px 0 var(--comal), 2px -2px 0 var(--comal), -2px 2px 0 var(--comal), 0 6px 18px rgba(0, 0, 0, .55); }
+.sub figcaption { margin-top: 10px; font: 500 13px/1.45 var(--sans); color: var(--ink-muted); }
+
+/* ---------- Sources ---------- */
+.src { background: var(--comal); color: var(--cream-muted); padding: 64px 0 72px; margin-top: 88px; }
+.src h2 { grid-column: 1 / 5; font: 800 34px/1.05 var(--sutro); color: var(--cream); }
+.src ul { grid-column: 5 / 13; margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; font: 600 15px/1.45 var(--sans); }
+.src a { color: var(--cream); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.src span { color: var(--cream-muted); font-weight: 500; }
+
+@media (max-width: 900px) {
+  .wrap, .wall__in { width: calc(100% - 40px); }
+  :root { --wrap: calc(100vw - 40px); --indent: 0px; }
+  .grid, .wall__in { grid-template-columns: minmax(0, 1fr); row-gap: 20px; }
+  .wall__words { min-width: 0; overflow: hidden; }
+  .grid > *, .wall__in > * { grid-column: 1 / -1 !important; }
+  .top h1 { font-size: 40px; }
+  .now { grid-template-columns: 1fr; }
+  .story p { font-size: 18px; }
+  .hang__mark { left: -6px; font-size: 150px; }
+  .hang blockquote p { font-size: 28px; }
+  .wall { padding: 44px 0 48px; }
+  .wall::before { inset: 10px; }
+  .sticker { float: none; width: auto; margin: 32px 10px 40px; }
+  .note { position: static; width: auto; margin-top: 12px; }
+  .note svg { display: none; }
+  .led__track { font-size: 54px; }
+  .sub blockquote p { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap grid">
+    <div style="grid-column: 1 / -1"><span class="logo" aria-label="L.A. TACO"></span></div>
+    <h1>Pull quotes that earn the interruption</h1>
+    <p class="top__dek">Six ways to pull a line out of an article 1 story, each shown in place at real size. They draw on what L.A. TACO’s streets already do with lettering: painted walls, LED storefront signs, stickers on the back of a taco truck.</p>
+    <p class="top__why"><b>Why change it</b>The red box reads like an alert or an ad, it fights the red masthead and the More Opinion fascia, and the mustard rule is the default every CMS ships.</p>
+    <nav class="jump" aria-label="Options">
+      <a href="#now">What we have now</a><a href="#a">A Hanging marks</a><a href="#b">B Rótulo wall</a><a href="#c">C LED sign</a><a href="#d">D Slap sticker</a><a href="#e">E Marker</a><a href="#f">F Subtitle</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- Baseline -->
+<section class="opt" id="now" aria-labelledby="now-h">
+  <div class="wrap grid opt__head">
+    <div class="opt__name"><h2 id="now-h">What article 1 does now</h2></div>
+  </div>
+  <div class="wrap grid">
+    <div class="now">
+      <div class="now__sign">These deaths beg the question: Is the benefit worth the risk?</div>
+      <div class="now__rule">I was being pushed to do something I knew was unsafe, and I refused.</div>
+    </div>
+    <div class="now__notes"><ul><li>The red box looks like a warning, not a voice.</li><li>Same red as the masthead, the member board edge and the fascia, so nothing stands out.</li><li>The rule version is the generic blog default.</li></ul></div>
+  </div>
+</section>
+
+<!-- A -->
+<section class="opt" id="a" aria-labelledby="a-h">
+  <div class="wrap grid opt__head">
+    <div class="opt__name"><span class="opt__letter" aria-hidden="true">A</span><h2 id="a-h">Hanging quote marks</h2></div>
+    <p class="opt__what">No box. A giant chromatic Sutro Deluxe quote mark hangs out into the margin, like the first letter on a painted sign. The quote sits in the text column at 40px. (Chosen for article 1, without the underline.)</p>
+    <div class="opt__meta">
+      <p class="opt__use"><b>Use it for</b>The everyday default, any section, any length up to about 30 words.</p>
+      <p class="opt__use"><b>Cost</b>Low. One component, no images. Works in the 680 column and on mobile.</p>
+    </div>
+  </div>
+  <div class="wrap grid">
+    <div class="story">
+      <p class="fade">Not long after my close call, I was sent to cover a drug bust in a national forest. Federal officers were removing hundreds of pounds of marijuana, and my correspondent arranged for me to fly with them as they removed the plants.</p>
+      <figure class="hang">
+        <span class="hang__mark" aria-hidden="true"><span class="chroma chroma--deluxe" data-text="“"><span>“</span></span></span>
+        <blockquote><p>I was being pushed to do something I knew was unsafe, and I refused. I never flew in a helicopter again.</p></blockquote>
+        <figcaption>Scott Shulman, on his last assignment for KABC</figcaption>
+      </figure>
+      <p class="fade">Two weeks ago, Los Angeles lost more precious lives when NBC4 and Telemundo 52’s news chopper tragically fell to the ground and erupted in flames.</p>
+    </div>
+  </div>
+</section>
+
+<!-- B -->
+<section class="opt" id="b" aria-labelledby="b-h">
+  <div class="wrap grid opt__head">
+    <div class="opt__name"><span class="opt__letter" aria-hidden="true">B</span><h2 id="b-h">Rótulo wall</h2></div>
+    <p class="opt__what">The quote gets painted on a wall. It breaks out of the grid to the full width of the window, in the section’s wall colour (Opinion is Dodger blue, as in article 2), with stacked lines sized to fill the wall and a sign painter’s double pinstripe around it.</p>
+    <div class="opt__meta">
+      <p class="opt__use"><b>Use it for</b>Once per story, on the line the story turns on. Short quotes only, 6 to 14 words.</p>
+      <p class="opt__use"><b>Cost</b>Medium. Needs a line-break field in the CMS (or fit-to-width JS) and a colour per section.</p>
+    </div>
+  </div>
+  <div class="wrap grid">
+    <div class="story">
+      <p class="fade">In 1977, Francis Gary Powers and George Spears were killed in the tragic crash of KNBC’s “telecopter.” In 2007, a pair of Arizona news choppers collided while covering a pursuit, killing all four occupants.</p>
+      <figure class="wall">
+        <div class="wall__in">
+          <blockquote class="wall__words">
+            <p class="vh">These deaths beg the question: Is the benefit worth the risk?</p>
+            <span class="wall__line fit" aria-hidden="true"><span class="chroma chroma--deluxe" data-text="THESE DEATHS BEG"><span>THESE DEATHS BEG</span></span></span>
+            <span class="wall__line fit is-solid" aria-hidden="true">the question:</span>
+            <span class="wall__line fit" aria-hidden="true"><span class="chroma chroma--deluxe" data-text="IS THE BENEFIT"><span>IS THE BENEFIT</span></span></span>
+            <span class="wall__line fit" aria-hidden="true"><span class="chroma chroma--deluxe" data-text="WORTH THE RISK?"><span>WORTH THE RISK?</span></span></span>
+          </blockquote>
+          <figcaption class="wall__by"><b>Scott Shulman</b>Airborne cameraman, KABC, for most of two decades</figcaption>
+        </div>
+      </figure>
+      <p class="fade">I was forced to make that decision years ago as a participant in this Russian Roulette of daily broadcasting. I felt my days were being numbered.</p>
+    </div>
+  </div>
+</section>
+
+<!-- C -->
+<section class="opt" id="c" aria-labelledby="c-h">
+  <div class="wrap grid opt__head">
+    <div class="opt__name"><span class="opt__letter" aria-hidden="true">C</span><h2 id="c-h">LED storefront sign</h2></div>
+    <p class="opt__what">The scrolling red LED sign from every swap meet, liquor store and taquería window (ABIERTO, TACOS, CHECKS CASHED). The quote crawls across a dot-matrix panel at the full story width. This is the page’s one moving moment, and it stops on hover. With reduced motion it sits still and wraps.</p>
+    <div class="opt__meta">
+      <p class="opt__use"><b>Use it for</b>News and breaking stories, quotes that work as a slogan. Under 12 words.</p>
+      <p class="opt__use"><b>Cost</b>Medium. Pure CSS. Figma shows one static frame of it.</p>
+    </div>
+  </div>
+  <div class="wrap grid">
+    <div class="story">
+      <p class="fade">The news chopper community will decry my query, but we have other options. Police departments have embraced drone technology to address crime, reducing helicopter-related danger.</p>
+      <figure class="led">
+        <blockquote class="vh"><p>Now is the time to make the change and save lives.</p></blockquote>
+        <div class="led__box" aria-hidden="true"><div class="led__glow"><div class="led__track">
+          <span>Now is the time to make the change <b>and save lives.</b></span>
+          <span aria-hidden="true">Now is the time to make the change <b>and save lives.</b></span>
+        </div></div></div>
+        <figcaption class="led__cap"><span>Scott Shulman, former KABC cameraman</span><span>Hover to stop the sign</span></figcaption>
+      </figure>
+      <p class="fade">We can still watch aerials of chickens roaming the streets and the inevitable high-speed car chase that viewers have come to love.</p>
+    </div>
+  </div>
+</section>
+
+<!-- D -->
+<section class="opt" id="d" aria-labelledby="d-h">
+  <div class="wrap grid opt__head">
+    <div class="opt__name"><span class="opt__letter" aria-hidden="true">D</span><h2 id="d-h">Slap sticker</h2></div>
+    <p class="opt__what">The die-cut sticker you find on the back window of a taco truck: cream vinyl with a white kiss-cut edge, slapped on at an angle, cutting into the column so the text wraps around it, and sticking out into the gutter. A red starburst from the homepage guide cards stamps it “LA NETA” (the honest truth).</p>
+    <div class="opt__meta">
+      <p class="opt__use"><b>Use it for</b>Funny, sharp or very human lines. Food and culture stories. Under 20 words.</p>
+      <p class="opt__use"><b>Cost</b>Low. Float plus a rotation. On mobile it sits between paragraphs, still tilted.</p>
+    </div>
+  </div>
+  <div class="wrap grid">
+    <div class="story">
+      <aside class="sticker" aria-label="Pull quote">
+        <span class="stamp" aria-hidden="true"><span class="stamp__in"><b>LA<br>NETA</b></span></span>
+        <div class="sticker__face"><p>“I pitched it, three-pointer style, into the trash bin.”</p><small>Scott Shulman, on his Golden Mike award</small></div>
+      </aside>
+      <p>Within a year, my participation was rewarded with a “Golden Mike” award for best coverage of a live breaking story. I didn’t attend the ceremony; I was already living with a strange sense of survivor’s guilt. I couldn’t fathom being rewarded for capturing the death of an armed criminal live when all I did was point the camera.</p>
+      <p>When UPS delivered my Golden Mike, I pitched it—three-pointer style—into the trash bin. Since Stroh’s death, the passion for live news televised from noisy helicopters has proliferated the airwaves. Fires, floods, O.J. Simpson’s “Bronco Blanco” chase, and yes, the staple of aerial news, the high-speed police pursuit.</p>
+      <div class="clear"></div>
+    </div>
+  </div>
+</section>
+
+<!-- E -->
+<section class="opt" id="e" aria-labelledby="e-h">
+  <div class="wrap grid opt__head">
+    <div class="opt__name"><span class="opt__letter" aria-hidden="true">E</span><h2 id="e-h">Marker in the running text</h2></div>
+    <p class="opt__what">The line stays where it is, so nothing repeats. A hand-pulled mustard marker stroke picks it out, and a note in the gutter (where a reader would scribble) offers to share just that sentence. Quieter than the others, and it can appear more than once.</p>
+    <div class="opt__meta">
+      <p class="opt__use"><b>Use it for</b>News, explainers and data stories, where a repeated quote feels like padding.</p>
+      <p class="opt__use"><b>Cost</b>Low. A mark tag in the CMS. The gutter note needs the right rail to start lower.</p>
+    </div>
+  </div>
+  <div class="wrap grid">
+    <div class="story marked">
+      <p>I remember it as though it was yesterday, because I was the cameraman who shot it from the KABC helicopter. <mark class="hl">What I saw through my viewfinder was witnessed by tens of thousands of viewers, a violent death broadcast in real time.</mark></p>
+      <aside class="note" aria-label="Share this line">
+        <svg viewBox="0 0 76 44" aria-hidden="true"><path d="M74 8 C 50 2, 22 6, 6 34" fill="none" stroke="#D7261E" stroke-width="3" stroke-linecap="round"/><path d="M2 24 L 6 36 L 17 30" fill="none" stroke="#D7261E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <b>Worth repeating</b>
+        <p>Readers can share just this sentence, with a link back to it.</p>
+        <a href="#">Share this line</a>
+      </aside>
+      <p class="fade">It didn’t take long before high-speed police pursuits became a staple of local news. Stations regularly interrupt programming to bring viewers these Roman Colosseum-style spectacles delivered right to their home screen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- F -->
+<section class="opt" id="f" aria-labelledby="f-h">
+  <div class="wrap grid opt__head">
+    <div class="opt__name"><span class="opt__letter" aria-hidden="true">F</span><h2 id="f-h">Subtitle on the photo</h2></div>
+    <p class="opt__what">The quote is subtitled onto an inline photo, like a still from a Spanish-dubbed movie on Channel 34: mustard Sutro with a comal outline, sitting low and centered. The photo and the line read as one moment.</p>
+    <div class="opt__meta">
+      <p class="opt__use"><b>Use it for</b>Profiles and first-person stories, where the photo shows the person speaking. Never over food.</p>
+      <p class="opt__use"><b>Cost</b>Low. Needs photos with a calm lower third, and a fallback to A when there isn’t one.</p>
+    </div>
+  </div>
+  <div class="wrap grid">
+    <div class="story">
+      <p class="fade">Sometimes we responded to a call on the police scanner; other times we flew to look at girls in bikinis on the Malibu beaches. Heck, it wasn’t illegal, and it was “fun.”</p>
+      <figure class="sub">
+        <img src="img/article/chopper-2.jpg" alt="Shulman rides with a film camera in the open bubble of a small helicopter, mountains behind.">
+        <blockquote><p>We even came within inches of landing on Downtown buildings.</p></blockquote>
+        <figcaption>Scott Shulman in a news helicopter. Photo courtesy of Scott Shulman.</figcaption>
+      </figure>
+      <p class="fade">One of our regular pilots was a police officer who never got tired of buzzing his ex-girlfriend’s suburban home.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="src">
+  <div class="wrap grid">
+    <h2>Where these come from</h2>
+    <ul>
+      <li><a href="https://www.smashingmagazine.com/2008/06/block-quotes-and-pull-quotes-examples-and-good-practices">Smashing Magazine, Block quotes and pull quotes</a> <span>A gallery of pull quotes that do more than sit in a box.</span></li>
+      <li><a href="https://creativepro.com/how-to-attract-attention-pull-quotes/">CreativePro, How to attract attention with pull quotes</a> <span>Magazine examples: oversized quote marks, quotes on photos, colour as the signal.</span></li>
+      <li><a href="https://www.fonts.com/content/learning/fyti/typographic-tips/pull-quotes">Fonts.com, Pull quotes</a> <span>Hang the punctuation, cut the quote into the column, one per spread.</span></li>
+      <li><a href="https://hyperallergic.com/the-hand-painted-signs-and-murals-of-latinx-la">Hyperallergic, The hand-painted signs and murals of Latinx L.A.</a> <span>The rótulo vocabulary behind B.</span></li>
+      <li><a href="https://texasstandard.org/stories/mexican-art-taco-font-rotulos-rotulo-taquerias-panaderias-trucks-menus-lettering-style/">Texas Standard, The art of rótulos</a> <span>Bright colours and lettering made to be read from a moving car.</span></li>
+      <li><a href="https://lataco.com/sign-painter-mikolaj-wyszynski">L.A. TACO, sign painter Mikolaj Wyszynski</a> <span>Our own reporting on the city’s sign painters.</span></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// B: size each painted line so it fills the wall's lettering column (like a sign painter laying out a wall)
+(() => {
+  let last = 0;
+  const fit = () => document.querySelectorAll('.wall__words').forEach(box => {
+    const w = box.clientWidth;
+    if (w === last) return; last = w;
+    box.querySelectorAll('.fit').forEach(line => {
+      line.style.fontSize = '100px';
+      const inner = line.firstElementChild || line;
+      const r = document.createRange(); r.selectNodeContents(line);
+      const natural = r.getBoundingClientRect().width;
+      const size = Math.min(170, 100 * w / natural * (line.classList.contains('is-solid') ? 0.62 : 1));
+      line.style.fontSize = size.toFixed(1) + 'px';
+    });
+  });
+  document.fonts.ready.then(() => {
+    fit();
+    const ro = new ResizeObserver(fit);
+    document.querySelectorAll('.wall__words').forEach(b => ro.observe(b));
+  });
+})();
+</script>
+</body>
+</html>

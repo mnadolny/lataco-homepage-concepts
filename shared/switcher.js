@@ -8,6 +8,11 @@
     ['b.html', 'Version B'],
   ];
   const here = location.pathname.split('/').pop() || 'index.html';
+  // Article pages get their own set: the three hero options, plus a way back to the homepage
+  if (here.startsWith('article-')) {
+    concepts.length = 0;
+    concepts.push(['b.html', 'Homepage'], ['article-1.html', '1 Hanging sign'], ['article-2.html', '2 Painted wall'], ['article-3.html', '3 Menu board']);
+  }
   const nav = document.createElement('nav');
   nav.setAttribute('aria-label', 'Concept switcher');
   nav.className = 'lat-switcher';
