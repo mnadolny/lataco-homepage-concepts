@@ -330,6 +330,7 @@ SHELL = """<!doctype html>
 </nav>
 {hero}{body}
 <script src="shared/switcher.js" defer></script>
+<script src="shared/comments.js" defer></script>
 </body>
 </html>
 """
