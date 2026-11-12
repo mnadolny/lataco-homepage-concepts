@@ -165,10 +165,10 @@ HERO_2_CSS = r"""
 .wall { background: var(--dod); color: var(--cream); padding: 60px 0 68px; min-height: 672px; }
 .wall .grid { align-items: start; }
 .wall__txt { grid-column: 1 / 7; }
-.wall__sec { display: inline-block; font-size: 58px; line-height: 1; }
+.wall__sec { display: inline-block; font-size: 30px; line-height: 1; }
 .wall__sec .chroma { --c-fill: var(--red); --c-primary: var(--cream); --c-inline: var(--mus); }
 .wall__sec .chroma > span { display: block; }
-.wall .hed { font-size: 52px; margin-top: 18px; }
+.wall .hed { font-size: 52px; margin-top: 14px; }
 .wall .dek { margin-top: 18px; color: var(--cream); }
 .wall__meta { margin-top: 26px; padding-top: 18px; border-top: 2px solid var(--cream-line); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .wall__by { font: 600 14px/1.4 var(--sans); color: var(--cream-muted); }
@@ -185,7 +185,7 @@ HERO_2_CSS = r"""
 .rail { padding-top: 34px; }
 @media (max-width: 900px) {
   .wall { padding: 32px 0 40px; min-height: 0; }
-  .wall__sec { font-size: 44px; }
+  .wall__sec { font-size: 24px; }
   .wall__meta { flex-direction: column; align-items: flex-start; }
   .still { margin: 0 0 -120px; }
   .still__snap { padding: 8px; box-shadow: 8px 8px 0 var(--comal); }
